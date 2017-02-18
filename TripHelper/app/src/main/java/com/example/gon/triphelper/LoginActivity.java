@@ -26,10 +26,8 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
-    private List<String> permissionNeeds = Arrays.asList("email");
     private LoginButton LoginActivity_LoginBtn;
 
-    private String mFacebookAccessToken;
 
 
     @Override

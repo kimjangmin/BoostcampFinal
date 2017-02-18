@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPermissionGranted() {
                 Toast.makeText(MainActivity.this, "권한 허가", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, Function_Camera.class);
+                Intent intent = new Intent(MainActivity.this, FunctionCamera.class);
                 startActivity(intent);
             }
 
