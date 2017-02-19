@@ -20,10 +20,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/btn_FunctionPlan_DateStart"
                 android:text="start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/tv_FunctionPlan_DateStart"
                 android:text="startdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -33,10 +35,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/btn_FunctionPlan_DateEnd"
                 android:text="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/tv_FunctionPlan_DateEnd"
                 android:text="enddate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -53,10 +57,11 @@
 
             <AutoCompleteTextView
                 android:id="@+id/myautocomplete"
-                android:layout_width="fill_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:completionThreshold="1" />
             <Button
+                android:id="@+id/btn_FunctionPlan_add"
                 android:text="add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -64,5 +69,11 @@
         </LinearLayout>
 
     </LinearLayout>
+    <ListView
+        android:id="@+id/list_spot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
 
 </LinearLayout>

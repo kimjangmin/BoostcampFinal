@@ -29,25 +29,35 @@ public class NetworkSetting{
     public NetworkMethod getNetworkMethod(){
         return networkMethod;
     }
-    public void buildNetworkService(String ip, int port){
+    public void buildNetworkService(String address, int port){
         synchronized (NetworkSetting.class){
             if(networkMethod == null){
-                Url = String.format("http://%s:%d",ip,port);
-                Log.i("TAG","NetworkSetting Url = "+Url);
-                Gson gson = new GsonBuilder().create();
-
-                GsonConverterFactory factory = GsonConverterFactory.create(gson);
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(Url)
-                        .addConverterFactory(factory)
-                        .build();
-
-                networkMethod = retrofit.create(NetworkMethod.class);
-                Log.i("TAG","retrofit access = "+retrofit.toString());
-
+                Url = String.format("http://%s:%d",address,port);
+                setting();
             }
         }
+    }
+    public void buildAPIService(String address){
+        synchronized (NetworkSetting.class){
+            if(networkMethod == null){
+                Url = String.format("http://%s",address);
+                setting();
+            }
+        }
+    }
+    public void setting(){
+        Log.i("TAG","NetworkSetting Url = "+ Url);
+        Gson gson = new GsonBuilder().create();
+
+        GsonConverterFactory factory = GsonConverterFactory.create(gson);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Url)
+                .addConverterFactory(factory)
+                .build();
+
+        networkMethod = retrofit.create(NetworkMethod.class);
+        Log.i("TAG","retrofit access = "+retrofit.toString());
     }
 
 }

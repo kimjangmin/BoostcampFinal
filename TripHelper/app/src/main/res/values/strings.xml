@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TripHelper</string>
     <string name="facebook_app_id">1890864161147195</string>
+    <string name="save">save</string>
 </resources>
