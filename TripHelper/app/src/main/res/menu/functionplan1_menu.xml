@@ -2,12 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/functionCamera_save"
-        android:title="@string/functionCamera_save"
-        app:showAsAction="always"
+        android:id="@+id/Funcion_Plan1"
+        android:title="@string/functionPlan1_nextBtn"
+        app:showAsAction ="always"
         android:orderInCategory="1"
         />
-
-
 
 </menu>

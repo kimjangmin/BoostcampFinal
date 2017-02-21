@@ -221,7 +221,7 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
                 startActivity(intent);
                 finish();
                 return true;
-            case R.id.Camera_save:
+            case R.id.functionCamera_save:
                 Log.i(TAG,"Camera_save start");
                 capture();
                 finish();

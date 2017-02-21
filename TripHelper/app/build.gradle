@@ -40,6 +40,10 @@ dependencies {
     //레트로핏
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-
+    //권한허가
     compile 'gun0912.ted:tedpermission:1.0.3'
+
+    //
+    compile 'com.github.vipulasri:timelineview:1.0.3'
+    compile 'com.android.support:design:23.0.0'
 }
