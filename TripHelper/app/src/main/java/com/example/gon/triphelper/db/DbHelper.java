@@ -16,7 +16,8 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table "+ DbTable.AutoCompleteTable.TABLENAME +"( "+
                 " _id integer primary key autoincrement, " +
-                DbTable.AutoCompleteTable.TITLE +" string not null"+");");
+                DbTable.AutoCompleteTable.TITLE +" string not null, "+
+                DbTable.AutoCompleteTable.CONTENTTYPEID+ " string not null "+");");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

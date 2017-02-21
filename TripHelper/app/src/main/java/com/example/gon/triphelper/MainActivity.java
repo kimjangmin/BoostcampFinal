@@ -1,6 +1,7 @@
 package com.example.gon.triphelper;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -60,8 +61,14 @@ public class MainActivity extends AppCompatActivity {
     private NetworkMethod networkMethod;
     RecyclerView rv_newPhoto;
     //    MainPage_RVAdapter adapter;
-    Button main_camerabtn;
-    Button main_planbtn;
+
+    private Button main_camerabtn;
+    private Button main_planbtn;
+    private Button main_foodbtn;
+    private Button main_staybtn;
+    private Button main_spotbtn;
+    private Button main_mybtn;
+
     ApiDataTable apiDataTable;
     Uri photoUrl;
     private SQLiteDatabase sqLiteDatabase;
@@ -78,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init();
         hsv_function = (HorizontalScrollView) findViewById(R.id.hsv_function);
+        main_camerabtn = (Button) findViewById(R.id.main_camerabtn);
+        main_planbtn = (Button)findViewById(R.id.main_planbtn);
+        main_foodbtn = (Button)findViewById(R.id.main_foodbtn);
+        main_staybtn = (Button)findViewById(R.id.main_staybtn);
+        main_spotbtn = (Button)findViewById(R.id.main_spotbtn);
+        main_mybtn = (Button)findViewById(R.id.main_mybtn);
 
 
         final PermissionListener permissionlistener = new PermissionListener() {
@@ -94,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        main_camerabtn = (Button) findViewById(R.id.main_camerabtn);
+
         main_camerabtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                         .check();
             }
         });
-        main_planbtn = (Button)findViewById(R.id.main_planbtn);
+
         main_planbtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -116,6 +129,35 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        main_foodbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searching("39");
+            }
+        });
+        main_staybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searching("32");
+            }
+        });
+        main_spotbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searching("spot");
+            }
+        });
+        main_mybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+    public void searching(String type){
+        Intent intent = new Intent(this, FunctionSearch.class);
+        intent.putExtra("type", type);
+        startActivity(intent);
     }
     private void init() {
         dbHelper = new DbHelper(this);
@@ -170,6 +212,17 @@ public class MainActivity extends AppCompatActivity {
         String arrange = "A";
         String numOfRows = "20";
         String type = "json";
+        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("loading...");
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
         @Override
         protected Void doInBackground(String... params) {
             /*Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/").addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create())).build();
@@ -235,7 +288,10 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject tmp = jsonArray.getJSONObject(i);
                     String title = tmp.getString("title");
                     title = title.replaceAll("'","");
-                    sqLiteDatabase.execSQL("insert into "+ DbTable.AutoCompleteTable.TABLENAME+ " ( " + DbTable.AutoCompleteTable.TITLE+" ) " +" values ( '"+ title+"' );");
+                    String contenttypeid = tmp.getString("contenttypeid");
+                    sqLiteDatabase.execSQL("insert into "+ DbTable.AutoCompleteTable.TABLENAME+
+                            " ( " + DbTable.AutoCompleteTable.TITLE+"," + DbTable.AutoCompleteTable.CONTENTTYPEID+" ) "
+                            +" values ( '"+ title+"', '" + contenttypeid+ "' );");
                     Log.i("TAG","PARSING TITLE = "+title);
                 }
                 sqLiteDatabase.setTransactionSuccessful();;
@@ -252,8 +308,14 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }finally {
                 sqLiteDatabase.endTransaction();
+                sqLiteDatabase.close();
             }
             return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+            super.onPostExecute(aVoid);
         }
         private String urlsetting(){
             StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList");

@@ -34,7 +34,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".FunctionPlan1" />
         <activity android:name=".FunctionPlan2" />
-        <activity android:name=".functionplan3.FunctionPlan3"></activity>
+        <activity android:name=".functionplan3.FunctionPlan3" />
+        <activity android:name=".FunctionSearch"></activity>
     </application>
 
 </manifest>

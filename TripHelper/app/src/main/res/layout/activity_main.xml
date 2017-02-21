@@ -21,14 +21,22 @@
                 android:layout_height="wrap_content"
                 android:text="btn2"/>
             <Button
+                android:id="@+id/main_foodbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="btn3"/>
             <Button
+                android:id="@+id/main_staybtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="btn3"/>
             <Button
+                android:id="@+id/main_spotbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="btn3"/>
+            <Button
+                android:id="@+id/main_mybtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="btn3"/>
