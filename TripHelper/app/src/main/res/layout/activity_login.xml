@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.gon.triphelper.LoginActivity">
+    tools:context="com.jm.gon.triphelper.LoginActivity">
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/LoginActivity_LoginBtn"

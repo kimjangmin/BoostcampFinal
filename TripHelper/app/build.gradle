@@ -8,7 +8,7 @@ android {
         mavenCentral()
     }
     defaultConfig {
-        applicationId "com.example.gon.triphelper"
+        applicationId "com.jm.gon.triphelper"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -46,4 +46,7 @@ dependencies {
     //
     compile 'com.github.vipulasri:timelineview:1.0.3'
     compile 'com.android.support:design:23.0.0'
+
+    compile 'com.github.bumptech.glide:glide:3.7'
+    compile 'jp.wasabeef:glide-transformations:2.0.1'
 }
