@@ -5,50 +5,66 @@
     <HorizontalScrollView
         android:id="@+id/hsv_function"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:paddingTop="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/main_camerabtn"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <ImageButton
+                android:id="@+id/ibn_MainActivity_camera"
+                android:src="@drawable/camera"
+                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="btn1"/>
-            <Button
-                android:id="@+id/main_planbtn"
+                android:padding="10dp"/>
+            <ImageButton
+                android:id="@+id/ibn_MainActivity_plan"
+                android:src="@drawable/tour"
+                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="btn2"/>
-            <Button
-                android:id="@+id/main_foodbtn"
+                android:padding="10dp"/>
+            <ImageButton
+                android:id="@+id/ibn_MainActivity_restaurant"
+                android:src="@drawable/restaurant"
+                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="btn3"/>
-            <Button
-                android:id="@+id/main_staybtn"
+                android:padding="10dp"/>
+            <ImageButton
+                android:id="@+id/ibn_MainActivity_room"
+                android:src="@drawable/hotel"
+                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="btn3"/>
-            <Button
-                android:id="@+id/main_spotbtn"
+                android:padding="10dp"/>
+            <ImageButton
+                android:id="@+id/ibn_MainActivity_spot"
+                android:src="@drawable/temple"
+                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="btn3"/>
-            <Button
-                android:id="@+id/main_mybtn"
+                android:padding="10dp"/>
+            <ImageButton
+                android:id="@+id/ibn_MainActivity_mypage"
+                android:src="@drawable/list"
+                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="btn3"/>
+                android:padding="10dp"/>
         </LinearLayout>
     </HorizontalScrollView>
     <TextView
+        android:id="@+id/tv_main_festival"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:text="history"/>
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/main_rv"
+        android:id="@+id/rv_MainActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

@@ -4,11 +4,11 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,10 +47,12 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
     private Spinner sp_FunctionPlan1_theme;
     private Spinner sp_FunctionPlan1_city;
 
-    private String theme[] = {null,"12","14","15","25","28","38","39"};
+    private String theme[] = {"0","12","14","15","25","28","38","39"};
     private String city[] = {"1","2","3","4","5","6","7","8","31","32","33","34","35","36","37","38","39"};
-    private String selectedtheme = null;
-    private String seletetedcity = null;
+    private String selectedtheme;
+    private String selectedcity;
+    private boolean isthemeSelected;
+    private boolean iscitySelected;
 
 
     int year, month, day;
@@ -74,6 +76,8 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
         btn_FunctionPlan1_add.setOnClickListener(autoCompleteClickListener);
         sp_FunctionPlan1_theme.setOnItemSelectedListener(themeSetListener);
         sp_FunctionPlan1_city.setOnItemSelectedListener(citySetListener);
+        selectedtheme="0";
+        selectedcity ="1";
 
 
         GregorianCalendar calendar = new GregorianCalendar();
@@ -89,18 +93,54 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
         listView.setAdapter(adapter);
 
         listarr = new ArrayList<>();
-        Cursor cursor = sqLiteDatabase.query(DbTable.AutoCompleteTable.TABLENAME, null, null, null, null, null, null);
-        while(cursor.moveToNext()){
-            listarr.add(cursor.getString(cursor.getColumnIndex(DbTable.AutoCompleteTable.TITLE)));
-        }
+
 
         actv_FunctionPlan1_spot = (AutoCompleteTextView) findViewById(R.id.actv_FunctionPlan1_spot);
         actv_FunctionPlan1_spot.addTextChangedListener(this);
+        filter();
+//        actv_FunctionPlan1_spot.setAdapter(new ArrayAdapter<>(
+//                this,
+//                android.R.layout.simple_dropdown_item_1line,
+//                listarr));
+    }
+    private void filter(){
+        Cursor cursor;
+        if(iscitySelected==false && isthemeSelected == false){
+            Log.i("TAG","all of things is false");
+            cursor = sqLiteDatabase.query(DbTable.AutoCompleteTable.TABLENAME,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null);
+        }else if(iscitySelected == true && isthemeSelected == true){
+            Log.i("TAG","all of things is true");
+            cursor =sqLiteDatabase.query(DbTable.AutoCompleteTable.TABLENAME,
+                    null,
+                    DbTable.AutoCompleteTable.CONTENTTYPEID+" = ? and "+ DbTable.AutoCompleteTable.AREACODE+" = ?",
+                    new String[]{selectedtheme, selectedcity},
+                    null,
+                    null,
+                    null);
+        }else{
+            Log.i("TAG","one of things is true");
+            cursor =sqLiteDatabase.query(DbTable.AutoCompleteTable.TABLENAME,
+                    null,
+                    DbTable.AutoCompleteTable.CONTENTTYPEID+" = ? or "+ DbTable.AutoCompleteTable.AREACODE+" = ?",
+                    new String[]{selectedtheme, selectedcity},
+                    null,
+                    null,
+                    null);
+        }
+        listarr.clear();
+        while(cursor.moveToNext()){
+            listarr.add(cursor.getString(cursor.getColumnIndex(DbTable.AutoCompleteTable.TITLE)));
+        }
         actv_FunctionPlan1_spot.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_dropdown_item_1line,
                 listarr));
-        actv_FunctionPlan1_spot.setTextColor(Color.RED);
     }
 
     @Override
@@ -118,6 +158,7 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void gettingInfo(){
         Intent intent = new Intent(FunctionPlan1.this, FunctionPlan2.class);
         int date = diffDate();
@@ -127,10 +168,11 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
         }
         intent.putExtra("date",date);
         intent.putExtra("theme",selectedtheme);
-        intent.putExtra("city",seletetedcity);
+        intent.putExtra("city", selectedcity);
         intent.putExtra("spot", spotlist);
         startActivity(intent);
     }
+
     private int diffDate() {
         String start = tv_FunctionPlan1_DateStart.getText().toString();
         String end = tv_FunctionPlan1_DateEnd.getText().toString();
@@ -187,19 +229,25 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             selectedtheme = theme[position];
+            isthemeSelected = true;
+            filter();
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
+            selectedtheme = theme[0];
         }
     };
 
     private AdapterView.OnItemSelectedListener citySetListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            seletetedcity = city[position];
+            selectedcity = city[position];
+            iscitySelected = true;
+            filter();
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
+            selectedcity = city[0];
         }
     };
 

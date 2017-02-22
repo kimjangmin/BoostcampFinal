@@ -9,4 +9,5 @@ import com.jm.gon.triphelper.functionplan2.TimeLineModel;
 public interface CustomClickListener {
     void onClick(TimeLineModel timeLineModel);
 
+
 }

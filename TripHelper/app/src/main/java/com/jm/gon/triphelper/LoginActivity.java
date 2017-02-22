@@ -1,5 +1,6 @@
 package com.jm.gon.triphelper;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
 
     private CallbackManager callbackManager;
     private LoginButton LoginActivity_LoginBtn;

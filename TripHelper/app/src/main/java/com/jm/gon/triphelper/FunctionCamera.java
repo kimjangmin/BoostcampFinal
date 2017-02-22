@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -39,73 +40,113 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
 
     private static final String TAG ="FunctionCamera";
     private static final int PICK_FROM_CAMERA = 0;
-    private static final int MY_PERMISSION_REQUEST_STORAGE = 10;
-    private static final int MY_PERMISSION_REQUEST_CAMERA = 11;
 
-    private boolean CAMERA_PERMISSION = false;
-    private boolean STORAGE_PERMISSION = false;
 
-    private Uri mImageCaptureUri;
-    private ImageView mPhotoImageView;
-    private Button mButton;
-    private FrameLayout captureFrameLayout;
-    TextView tv;
-    EditText et;
+    private Uri photoPath;
+    private ImageView iv_FunctionCamera_catpureImage;
+    private FrameLayout fl_FunctionCamera_captureLayout;
+    private Toolbar t_FunctionCamera_toolbar;
+    private TextView tv_FunctionCamera_captureText;
+    private EditText et_FunctionCamera_captureEdit;
+
+    private Button bt_FunctionCamera_fontbm;
+    private Button bt_FunctionCamera_fontddalgi;
+    private Button bt_FunctionCamera_fontmonsori;
+    private Button bt_FunctionCamera_fonttvnbold;
+    private Button bt_FunctionCamera_fonttvnlight;
+
     float oldXvalue;
     float oldYvalue;
-    private String filePath;
-    private String fileName;
-
     Typeface typeface;
-    Button btn_ddalgi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cameramain);
-        mPhotoImageView = (ImageView) findViewById(R.id.IV_image);
-        doTakePhotoAction();
-        tv = (TextView) findViewById(R.id.fl_tv);
-        tv.setOnTouchListener(this);
-        et = (EditText) findViewById(R.id.fl_et);
-        captureFrameLayout = (FrameLayout)findViewById(R.id.captureLayout);
-        et.isFocused();
-        et.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                et.setVisibility(View.INVISIBLE);
-            }
+        iv_FunctionCamera_catpureImage = (ImageView) findViewById(R.id.iv_FunctionCamera_catpureImage);
+        tv_FunctionCamera_captureText = (TextView) findViewById(R.id.tv_FunctionCamera_captureText);
+        et_FunctionCamera_captureEdit = (EditText) findViewById(R.id.et_FunctionCamera_captureEdit);
+        fl_FunctionCamera_captureLayout = (FrameLayout)findViewById(R.id.fl_FunctionCamera_captureLayout);
+        t_FunctionCamera_toolbar = (Toolbar)findViewById(R.id.t_FunctionCamera_toolbar);
+        bt_FunctionCamera_fontbm = (Button)findViewById(R.id.bt_FunctionCamera_fontbm);
+        bt_FunctionCamera_fontddalgi = (Button)findViewById(R.id.bt_FunctionCamera_fontddalgi);
+        bt_FunctionCamera_fontmonsori = (Button)findViewById(R.id.bt_FunctionCamera_fontmonsori);
+        bt_FunctionCamera_fonttvnbold = (Button)findViewById(R.id.bt_FunctionCamera_fonttvnbold);
+        bt_FunctionCamera_fonttvnlight = (Button)findViewById(R.id.bt_FunctionCamera_fonttvnlight);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+        bt_FunctionCamera_fontbm.setOnClickListener(fontbmClickListener);
+        bt_FunctionCamera_fontddalgi.setOnClickListener(fontddalgiClickListener);
+        bt_FunctionCamera_fontmonsori.setOnClickListener(fontmonsoriClickListener);
+        bt_FunctionCamera_fonttvnbold.setOnClickListener(fonttvnboldClickListener);
+        bt_FunctionCamera_fonttvnlight.setOnClickListener(fonttvnlightClickListener);
 
-            }
+        tv_FunctionCamera_captureText.setOnTouchListener(this);
+        et_FunctionCamera_captureEdit.isFocused();
+        et_FunctionCamera_captureEdit.addTextChangedListener(watchCatpureEdit);
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                tv.setText(et.getText().toString());
-
-            }
-        });
-        btn_ddalgi = (Button) findViewById(R.id.ddalgi);
-        typeface = Typeface.createFromAsset(getAssets(), "fonts/Ddalgi.ttf");
-        btn_ddalgi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv.setTypeface(typeface);
-            }
-        });
-
+        setSupportActionBar(t_FunctionCamera_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        doTakePhotoAction();
+
     }
+    TextWatcher watchCatpureEdit = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            tv_FunctionCamera_captureText.setText(et_FunctionCamera_captureEdit.getText().toString());
+        }
+    };
+
+    View.OnClickListener fontbmClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            typeface = Typeface.createFromAsset(getAssets(), "fonts/bm.ttf");
+            tv_FunctionCamera_captureText.setTypeface(typeface);
+        }
+    };
+    View.OnClickListener fontddalgiClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            typeface = Typeface.createFromAsset(getAssets(), "fonts/ddalgi.ttf");
+            tv_FunctionCamera_captureText.setTypeface(typeface);
+        }
+    };
+    View.OnClickListener fontmonsoriClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            typeface = Typeface.createFromAsset(getAssets(), "fonts/monsori.otf");
+            tv_FunctionCamera_captureText.setTypeface(typeface);
+        }
+    };
+    View.OnClickListener fonttvnboldClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            typeface = Typeface.createFromAsset(getAssets(), "fonts/tvn_Bold.ttf");
+            tv_FunctionCamera_captureText.setTypeface(typeface);
+        }
+    };
+    View.OnClickListener fonttvnlightClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            typeface = Typeface.createFromAsset(getAssets(), "fonts/tvn_Light.ttf");
+            tv_FunctionCamera_captureText.setTypeface(typeface);
+        }
+    };
+
+
     private void doTakePhotoAction()
     {
-        Log.i("TAG","doTakePhotoAction");
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         String url = "tmp_" + String.valueOf(System.currentTimeMillis())+".jpg";
-        mImageCaptureUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), url));
-        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+        photoPath = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), url));
+        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, photoPath);
         startActivityForResult(intent, PICK_FROM_CAMERA);
     }
     @Override
@@ -117,21 +158,19 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
     }
     private void capture(){
 
-        Log.i("TAG","capture start");
-        mPhotoImageView.bringToFront();
-        tv.bringToFront();
-        captureFrameLayout.setDrawingCacheEnabled(true);
-        captureFrameLayout.buildDrawingCache(true);
+        iv_FunctionCamera_catpureImage.bringToFront();
+        tv_FunctionCamera_captureText.bringToFront();
+        fl_FunctionCamera_captureLayout.setDrawingCacheEnabled(true);
+        fl_FunctionCamera_captureLayout.buildDrawingCache(true);
 
-        Bitmap capture = Bitmap.createBitmap(captureFrameLayout.getMeasuredWidth(), captureFrameLayout.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap capture = Bitmap.createBitmap(fl_FunctionCamera_captureLayout.getMeasuredWidth(), fl_FunctionCamera_captureLayout.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(capture);
-        captureFrameLayout.draw(canvas);
+        fl_FunctionCamera_captureLayout.draw(canvas);
         String savePath = Environment.getExternalStorageDirectory()+"/triphelper";
         File file = new File(savePath);
         boolean result =true;
         if(!file.exists()) {
             result = file.mkdir();
-            Log.i("TAG","create file");
             if(file.getParent()!=null){
                 Log.i("TAG","file path = "+file.getPath());
             }
@@ -142,25 +181,20 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
         }
 
         savePath += "/"+ "tmp+"+String.valueOf(System.currentTimeMillis())+".jpg";
-        Log.i("TAG","after savePath = "+savePath);
 
         FileOutputStream fileOutputStream = null;
         try {
             fileOutputStream = new FileOutputStream(savePath);
             capture.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-            captureFrameLayout.setDrawingCacheEnabled(false);
-            Log.i("TAG","doing trycatch");
+            fl_FunctionCamera_captureLayout.setDrawingCacheEnabled(false);
         } catch (FileNotFoundException e) {
-            Log.i("TAG","FileNotFoundException");
             Log.d("TAG",e.getMessage());
         }finally {
             try{
                 if(fileOutputStream != null){
                     fileOutputStream.close();
-                    Log.i("TAG","close");
                 }
             }catch (IOException e){
-                Log.i("TAG","IOException");
                 Log.d("TAG",e.getMessage());
             }
         }
@@ -168,7 +202,7 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
     private void rotationImage(Bitmap bitmap){
         ExifInterface exifInterface = null;
         try {
-            exifInterface = new ExifInterface(mImageCaptureUri.getPath());
+            exifInterface = new ExifInterface(photoPath.getPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -183,22 +217,20 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
                 break;
         }
         Bitmap rotateBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        mPhotoImageView.setImageBitmap(rotateBitmap);
+        iv_FunctionCamera_catpureImage.setImageBitmap(rotateBitmap);
 
     }
 
     private Bitmap setReduceImageSize(){
-        int targetImageViewWidth = mPhotoImageView.getWidth();
-        Log.i("TAG","targetImageViewWidth = "+targetImageViewWidth);
-        int targetImageViewHeight = mPhotoImageView.getHeight();
-        Log.i("TAG","targetImageViewHeight = "+targetImageViewHeight);
+        int targetImageViewWidth = iv_FunctionCamera_catpureImage.getWidth();
+        int targetImageViewHeight = iv_FunctionCamera_catpureImage.getHeight();
 
         BitmapFactory.Options bitOptions = new BitmapFactory.Options();
         bitOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mImageCaptureUri.getPath(), bitOptions);
+        BitmapFactory.decodeFile(photoPath.getPath(), bitOptions);
         bitOptions.inJustDecodeBounds = false;
 
-        return BitmapFactory.decodeFile(mImageCaptureUri.getPath(), bitOptions);
+        return BitmapFactory.decodeFile(photoPath.getPath(), bitOptions);
     }
 
     @Override
@@ -215,7 +247,6 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
                 finish();
                 return true;
             case R.id.functionCamera_save:
-                Log.i(TAG,"Camera_save start");
                 capture();
                 finish();
                 return true;

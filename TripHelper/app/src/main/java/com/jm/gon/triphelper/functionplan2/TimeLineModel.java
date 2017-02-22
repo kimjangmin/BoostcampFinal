@@ -11,12 +11,17 @@ import java.io.Serializable;
 
 public class TimeLineModel implements Parcelable {
 
+
+
     private String title;
     private String tel;
     private String addr;
     private String mapx;
     private String mapy;
     private String url;
+    private String startdate;
+    private String enddate;
+
 
 
     public TimeLineModel(){
@@ -29,6 +34,8 @@ public class TimeLineModel implements Parcelable {
         mapx = in.readString();
         mapy = in.readString();
         url = in.readString();
+        startdate = in.readString();
+        enddate = in.readString();
     }
 
     public static final Creator<TimeLineModel> CREATOR = new Creator<TimeLineModel>() {
@@ -91,6 +98,21 @@ public class TimeLineModel implements Parcelable {
         this.url = url;
     }
 
+    public String getStartdate() {
+        return startdate;
+    }
+
+    public void setStartdate(String startdate) {
+        this.startdate = startdate;
+    }
+
+    public String getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(String enddate) {
+        this.enddate = enddate;
+    }
     @Override
     public int describeContents() {
         return 0;
@@ -104,5 +126,7 @@ public class TimeLineModel implements Parcelable {
         dest.writeString(mapx);
         dest.writeString(mapy);
         dest.writeString(url);
+        dest.writeString(startdate);
+        dest.writeString(enddate);
     }
 }
