@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("loading...");
+            progressDialog.setMessage("DB Update...");
             progressDialog.show();
             super.onPreExecute();
         }
@@ -281,13 +281,15 @@ public class MainActivity extends AppCompatActivity {
 
                 for(int i = 0 ;i < jsonArray.length() ; i++){
                     JSONObject tmp = jsonArray.getJSONObject(i);
-                    String title = tmp.getString("title");
-                    title = title.replaceAll("'","");
-                    String contenttypeid = tmp.getString("contenttypeid");
-                    sqLiteDatabase.execSQL("insert into "+ DbTable.AutoCompleteTable.TABLENAME+
-                            " ( " + DbTable.AutoCompleteTable.TITLE+"," + DbTable.AutoCompleteTable.CONTENTTYPEID+" ) "
-                            +" values ( '"+ title+"', '" + contenttypeid+ "' );");
-                    Log.i("TAG","PARSING TITLE = "+title);
+                    if(tmp.has("mapx")) {
+                        String title = tmp.getString("title");
+                        title = title.replaceAll("'", "");
+                        String contenttypeid = tmp.getString("contenttypeid");
+                        sqLiteDatabase.execSQL("insert into " + DbTable.AutoCompleteTable.TABLENAME +
+                                " ( " + DbTable.AutoCompleteTable.TITLE + "," + DbTable.AutoCompleteTable.CONTENTTYPEID + " ) "
+                                + " values ( '" + title + "', '" + contenttypeid + "' );");
+                        Log.i("TAG", "PARSING TITLE = " + title);
+                    }
                 }
                 sqLiteDatabase.setTransactionSuccessful();;
             }catch (UnsupportedEncodingException e) {

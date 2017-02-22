@@ -20,30 +20,30 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
- * Created by 김장민 on 2017-02-21.
+ * Created by 김장민 on 2017-02-22.
  */
 
-public class Fragment1Adapter extends RecyclerView.Adapter<Fragment1Adapter.Fragment1ViewHolder> {
+public class Fragment2Adapter extends RecyclerView.Adapter<Fragment2Adapter.Fragment2ViewHolder> {
 
     private List<TimeLineModel> timeLineModelList;
     private int clickposition;
     private CustomClickListener customClickListener;
     Context context;
-    public Fragment1Adapter(ArrayList<TimeLineModel> list, Context ctx, CustomClickListener customClickListener){
+    public Fragment2Adapter(ArrayList<TimeLineModel> list, Context ctx, CustomClickListener customClickListener){
         timeLineModelList = list;
         Log.i("TAG","Fragment Adapter constructure listcount = "+timeLineModelList.size());
         context = ctx;
         this.customClickListener = customClickListener;
     }
     @Override
-    public Fragment1ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Fragment2Adapter.Fragment2ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.frunction_plan3_fragment1_adapter, parent, false);
-        return new Fragment1ViewHolder(view);
+        return new Fragment2Adapter.Fragment2ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(Fragment1ViewHolder holder, int position) {
+    public void onBindViewHolder(Fragment2Adapter.Fragment2ViewHolder holder, int position) {
         Log.i("TAG","onBindViewHolder count = "+position);
         clickposition = position;
         TimeLineModel timeLineModel = timeLineModelList.get(position);
@@ -66,12 +66,12 @@ public class Fragment1Adapter extends RecyclerView.Adapter<Fragment1Adapter.Frag
         notifyDataSetChanged();
     }
 
-    public class Fragment1ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class Fragment2ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView iv;
         TextView title;
         TextView addr;
         TextView tel;
-        public Fragment1ViewHolder(View itemView) {
+        public Fragment2ViewHolder(View itemView) {
             super(itemView);
             iv = (ImageView)itemView.findViewById(R.id.iv_fragment1_image);
             title = (TextView)itemView.findViewById(R.id.tv_fragment1_title);

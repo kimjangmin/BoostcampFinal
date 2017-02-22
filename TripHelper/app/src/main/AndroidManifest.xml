@@ -18,24 +18,25 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name="com.jm.gon.triphelper.LoginActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.jm.gon.triphelper.MainActivity" />
-        <activity android:name="com.jm.gon.triphelper.FunctionCamera" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".FunctionCamera" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
-        <activity android:name="com.jm.gon.triphelper.FunctionPlan1" />
-        <activity android:name="com.jm.gon.triphelper.FunctionPlan2" />
-        <activity android:name="com.jm.gon.triphelper.functionplan3.FunctionPlan3" />
-        <activity android:name="com.jm.gon.triphelper.FunctionSearch"></activity>
+        <activity android:name=".FunctionPlan1" />
+        <activity android:name=".FunctionPlan2" />
+        <activity android:name=".functionplan3.FunctionPlan3" />
+        <activity android:name=".FunctionSearch" />
+        <activity android:name=".FunctionPlan4"></activity>
     </application>
 
 </manifest>

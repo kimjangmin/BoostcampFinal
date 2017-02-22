@@ -1,12 +1,15 @@
 package com.jm.gon.triphelper.functionplan2;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
  * Created by 김장민 on 2017-02-21.
  */
 
-public class TimeLineModel implements Serializable {
+public class TimeLineModel implements Parcelable {
 
     private String title;
     private String tel;
@@ -16,6 +19,29 @@ public class TimeLineModel implements Serializable {
     private String url;
 
 
+    public TimeLineModel(){
+
+    }
+    protected TimeLineModel(Parcel in) {
+        title = in.readString();
+        tel = in.readString();
+        addr = in.readString();
+        mapx = in.readString();
+        mapy = in.readString();
+        url = in.readString();
+    }
+
+    public static final Creator<TimeLineModel> CREATOR = new Creator<TimeLineModel>() {
+        @Override
+        public TimeLineModel createFromParcel(Parcel in) {
+            return new TimeLineModel(in);
+        }
+
+        @Override
+        public TimeLineModel[] newArray(int size) {
+            return new TimeLineModel[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -63,5 +89,20 @@ public class TimeLineModel implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(tel);
+        dest.writeString(addr);
+        dest.writeString(mapx);
+        dest.writeString(mapy);
+        dest.writeString(url);
     }
 }

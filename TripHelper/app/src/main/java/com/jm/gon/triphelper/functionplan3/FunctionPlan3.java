@@ -1,16 +1,18 @@
 package com.jm.gon.triphelper.functionplan3;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.jm.gon.triphelper.R;
+import com.jm.gon.triphelper.functionplan2.TimeLineModel;
 
 public class FunctionPlan3 extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +24,19 @@ public class FunctionPlan3 extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Tab Three"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        Intent intent = getIntent();
+        TimeLineModel timeLineModel = intent.getParcelableExtra("model");
+        Log.i("TAG","FucntionPlan3 start");
+        Log.i("TAG","xxxxxxxxxxxxxxxxxxxxxxxxxx");
+        Log.i("TAG","timeLineMode x = "+timeLineModel.getMapx());
+        Log.i("TAG","xxxxxxxxxxxxxxxxxxxxxxxxxx");
+
+
         // Initializing ViewPager
         viewPager = (ViewPager) findViewById(R.id.pager);
 
         // Creating TabPagerAdapter adapter
-        FunctionPlan3PageAdapter pagerAdapter = new FunctionPlan3PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        FunctionPlan3PageAdapter pagerAdapter = new FunctionPlan3PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), timeLineModel);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
