@@ -25,22 +25,24 @@ public class FunctionPlan3PageAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
-        // Returning the current tabs
+        Log.i("GAG","FunctionPlan3PageAdapter getItem");
         switch (position) {
             case 0:
+                Log.i("GAG","FunctionPlan3PageAdapter case0");
                 FunctionPlan3Fragment1 functionPlan3Fragment1 = new FunctionPlan3Fragment1();
                 Bundle bundle1 = new Bundle();
                 bundle1.putParcelable("model",timeLineModel);
                 functionPlan3Fragment1.setArguments(bundle1);
                 return functionPlan3Fragment1;
             case 1:
+                Log.i("GAG","FunctionPlan3PageAdapter case1");
                 FunctionPlan3Fragment2 functionPlan3Fragment2 = new FunctionPlan3Fragment2();
                 Bundle bundle2 = new Bundle();
                 bundle2.putParcelable("model",timeLineModel);
                 functionPlan3Fragment2.setArguments(bundle2);
                 return functionPlan3Fragment2;
             case 2:
+                Log.i("GAG","FunctionPlan3PageAdapter case2");
                 FunctionPlan3Fragment3 functionPlan3Fragment3 = new FunctionPlan3Fragment3();
                 Bundle bundle3 = new Bundle();
                 bundle3.putParcelable("model",timeLineModel);

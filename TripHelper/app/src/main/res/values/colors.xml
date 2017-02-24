@@ -3,6 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#FFFFF700</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="bgColor">#FFFFF700</color>
+    <color name="bgColor">#A6FFF700</color>
+    <color name="fontColor0">#1B497D</color>
+    <color name="fontColor1">#104670</color>
+    <color name="fontColor2">#0B3870</color>
+    <color name="fontColor3">#285CA3</color>
+    <color name="fontColor4">#1C489E</color>
+    <color name="mainPage_fontColor">#00228B</color>
+    <color name="mainPage_CardView">#00228B</color>
     <color name="fontColor">#0E3BCC</color>
 </resources>

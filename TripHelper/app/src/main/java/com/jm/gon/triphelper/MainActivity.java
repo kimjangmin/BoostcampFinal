@@ -2,10 +2,7 @@ package com.jm.gon.triphelper;
 
 import android.Manifest;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,23 +12,16 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jm.gon.triphelper.Network_MainActivity.ApiDataTable;
 import com.jm.gon.triphelper.Network_MainActivity.NetworkMethod;
-import com.jm.gon.triphelper.db.DbHelper;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.jm.gon.triphelper.functionplan2.TimeLineModel;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by 김장민 on 2017-02-17.
@@ -40,9 +30,6 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     HorizontalScrollView hsv_function;
-    private NetworkMethod networkMethod;
-    RecyclerView rv_newPhoto;
-    //    MainPage_RVAdapter adapter;
 
     private ImageButton ibn_ActivityMain_camera;
     private ImageButton ibn_ActivityMain_plan;
@@ -50,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton ibn_ActivityMain_room;
     private ImageButton ibn_ActivityMain_spot;
     private ImageButton ibn_ActivityMain_mypage;
+    private TextView tv_main_festival;
     private RecyclerView rv_MainActivity;
     private ArrayList<TimeLineModel> modelList;
     public MainActivityAdapter adapter;
@@ -107,11 +95,13 @@ public class MainActivity extends AppCompatActivity {
         ibn_ActivityMain_room = (ImageButton)findViewById(R.id.ibn_MainActivity_room);
         ibn_ActivityMain_spot = (ImageButton)findViewById(R.id.ibn_MainActivity_spot);
         ibn_ActivityMain_mypage = (ImageButton)findViewById(R.id.ibn_MainActivity_mypage);
+        tv_main_festival = (TextView)findViewById(R.id.tv_main_festival);
+        tv_main_festival.setText(dataFormat()[0].substring(0,4)+"년 "+dataFormat()[0].substring(4,6)+"월 "+"행사");
         rv_MainActivity = (RecyclerView)findViewById(R.id.rv_MainActivity);
 
         modelList = new ArrayList<>();
-
-        control = new HttpConnectControl(this);
+        adapter = new MainActivityAdapter(modelList, this);
+        control = new HttpConnectControl(this, adapter);
 
         modelList = (ArrayList<TimeLineModel>) control.getResult(control.FESTIVAL, dataFormat()).clone();
 
@@ -170,34 +160,15 @@ public class MainActivity extends AppCompatActivity {
         ibn_ActivityMain_mypage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MainActivity.this, GetAlbum.class);
+                startActivity(intent);
             }
         });
 
-        adapter = new MainActivityAdapter(modelList);
+
         rv_MainActivity.setLayoutManager(new LinearLayoutManager(this));
         rv_MainActivity.setHasFixedSize(true);
         rv_MainActivity.setAdapter(adapter);
-
-        final Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if(adapter.modelList.size()!=0) {
-                    adapter.notifyDataSetChanged();
-                }else {
-                    Log.i("TAG1","adapter modellist = "+adapter.modelList.size());
-                    timer.cancel();
-                }
-            }
-        }, 500, 500);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.notifyDataSetChanged();
-            }
-        }, 1000);
-
 
     }
     public void searching(String type){

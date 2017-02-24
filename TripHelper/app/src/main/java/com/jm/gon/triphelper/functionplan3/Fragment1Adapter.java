@@ -31,7 +31,7 @@ public class Fragment1Adapter extends RecyclerView.Adapter<Fragment1Adapter.Frag
     Context context;
     public Fragment1Adapter(ArrayList<TimeLineModel> list, Context ctx, CustomClickListener customClickListener){
         timeLineModelList = list;
-        Log.i("TAG","Fragment Adapter constructure listcount = "+timeLineModelList.size());
+        Log.i("GAG","Fragment1 Adapter constructure listcount = "+timeLineModelList.size());
         context = ctx;
         this.customClickListener = customClickListener;
     }
@@ -44,9 +44,12 @@ public class Fragment1Adapter extends RecyclerView.Adapter<Fragment1Adapter.Frag
 
     @Override
     public void onBindViewHolder(Fragment1ViewHolder holder, int position) {
-        Log.i("TAG","onBindViewHolder count = "+position);
         clickposition = position;
         TimeLineModel timeLineModel = timeLineModelList.get(position);
+        Log.i("GAG","title = "+timeLineModel.getTel());
+        Log.i("GAG","addr = "+timeLineModel.getAddr());
+        Log.i("GAG","tel = "+timeLineModel.getTel());
+        Log.i("GAG","url = "+ timeLineModel.getUrl());
         holder.title.setText(timeLineModel.getTitle());
         holder.addr.setText(timeLineModel.getAddr());
         holder.tel.setText(timeLineModel.getTel());
@@ -59,7 +62,6 @@ public class Fragment1Adapter extends RecyclerView.Adapter<Fragment1Adapter.Frag
 
     @Override
     public int getItemCount() {
-        Log.i("TAG","Adapter size = "+timeLineModelList.size());
         return timeLineModelList.size();
     }
     public void update(ArrayList<TimeLineModel> list){

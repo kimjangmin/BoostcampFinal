@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <HorizontalScrollView
         android:id="@+id/hsv_function"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:paddingTop="10dp">
+        android:scrollbars="none">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:background="@color/bgColor"
             android:layout_marginBottom="10dp">
             <ImageButton
                 android:id="@+id/ibn_MainActivity_camera"
@@ -62,11 +63,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:textColor="@color/mainPage_fontColor"
+        android:textSize="20dp"
         android:text="history"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_MainActivity"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_MainActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </android.support.v7.widget.RecyclerView>
+    </FrameLayout>
 </LinearLayout>

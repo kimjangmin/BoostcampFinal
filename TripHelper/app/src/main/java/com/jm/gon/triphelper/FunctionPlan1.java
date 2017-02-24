@@ -6,20 +6,23 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jm.gon.triphelper.db.DbHelper;
 import com.jm.gon.triphelper.db.DbTable;
@@ -39,13 +42,14 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
     private DbHelper dbHelper;
     private ListView listView;
     private ArrayAdapter<String> adapter;
-    private Button btn_FunctionPlan1_add;
-    private Button btn_FunctionPlan1_DateStart;
-    private Button btn_FunctionPlan1_DateEnd;
+    private ImageButton iv_FunctionPlan1_add;
+    private ImageButton ib_FunctionPlan1_Departure;
+    private ImageButton ib_FunctionPlan1_Arrival;
     private TextView tv_FunctionPlan1_DateStart;
     private TextView tv_FunctionPlan1_DateEnd;
     private Spinner sp_FunctionPlan1_theme;
     private Spinner sp_FunctionPlan1_city;
+    private Toolbar t_FunctionPlan1_toolbar;
 
     private String theme[] = {"0","12","14","15","25","28","38","39"};
     private String city[] = {"1","2","3","4","5","6","7","8","31","32","33","34","35","36","37","38","39"};
@@ -54,31 +58,38 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
     private boolean isthemeSelected;
     private boolean iscitySelected;
 
-
     int year, month, day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_function_plan1);
 
         tv_FunctionPlan1_DateStart = (TextView)findViewById(R.id.tv_FunctionPlan1_DateStart);
         tv_FunctionPlan1_DateEnd = (TextView)findViewById(R.id.tv_FunctionPlan1_DateEnd);
-        btn_FunctionPlan1_DateStart = (Button)findViewById(R.id.btn_FunctionPlan1_DateStart);
-        btn_FunctionPlan1_DateEnd = (Button)findViewById(R.id.btn_FunctionPlan1_DateEnd);
-        btn_FunctionPlan1_add = (Button)findViewById(R.id.btn_FunctionPlan1_add);
+        ib_FunctionPlan1_Departure = (ImageButton) findViewById(R.id.ib_FunctionPlan1_Departure);
+        ib_FunctionPlan1_Arrival = (ImageButton) findViewById(R.id.ib_FunctionPlan1_Arrival);
+        iv_FunctionPlan1_add = (ImageButton)findViewById(R.id.iv_FunctionPlan1_add);
         sp_FunctionPlan1_theme = (Spinner)findViewById(R.id.sp_FunctionPlan1_theme);
         sp_FunctionPlan1_city = (Spinner)findViewById(R.id.sp_FunctionPlan1_city);
+        t_FunctionPlan1_toolbar = (Toolbar)findViewById(R.id.t_FunctionPlan1_toolbar);
 
-        btn_FunctionPlan1_DateStart.setOnClickListener(dateStartClickListener);
-        btn_FunctionPlan1_DateEnd.setOnClickListener(dateEndClickListener);
-        btn_FunctionPlan1_add.setOnClickListener(autoCompleteClickListener);
+        tv_FunctionPlan1_DateStart.setOnClickListener(dateStartClickListener);
+        ib_FunctionPlan1_Departure.setOnClickListener(dateStartClickListener);
+        ib_FunctionPlan1_Arrival.setOnClickListener(dateEndClickListener);
+        tv_FunctionPlan1_DateEnd.setOnClickListener(dateEndClickListener);
+        iv_FunctionPlan1_add.setOnClickListener(autoCompleteClickListener);
         sp_FunctionPlan1_theme.setOnItemSelectedListener(themeSetListener);
         sp_FunctionPlan1_city.setOnItemSelectedListener(citySetListener);
         selectedtheme="0";
         selectedcity ="1";
 
+
+        setSupportActionBar(t_FunctionPlan1_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         GregorianCalendar calendar = new GregorianCalendar();
         year = calendar.get(Calendar.YEAR);
@@ -97,11 +108,8 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
 
         actv_FunctionPlan1_spot = (AutoCompleteTextView) findViewById(R.id.actv_FunctionPlan1_spot);
         actv_FunctionPlan1_spot.addTextChangedListener(this);
+        actv_FunctionPlan1_spot.setTextColor(getResources().getColor(R.color.fontColor));
         filter();
-//        actv_FunctionPlan1_spot.setAdapter(new ArrayAdapter<>(
-//                this,
-//                android.R.layout.simple_dropdown_item_1line,
-//                listarr));
     }
     private void filter(){
         Cursor cursor;
@@ -153,6 +161,7 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.Funcion_Plan1:
+
                 gettingInfo();
                 return true;
         }
@@ -161,6 +170,16 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
 
     private void gettingInfo(){
         Intent intent = new Intent(FunctionPlan1.this, FunctionPlan2.class);
+        if((tv_FunctionPlan1_DateStart.getText().toString()).equals("Depature date")){
+            new DatePickerDialog(FunctionPlan1.this, dateStartSetListener, year, month, day).show();
+            Toast.makeText(FunctionPlan1.this, "input departure date",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if((tv_FunctionPlan1_DateEnd.getText().toString()).equals("Arrival date")){
+            new DatePickerDialog(FunctionPlan1.this, dateEndSetListener, year, month, day).show();
+            Toast.makeText(FunctionPlan1.this, "input Arrival date",Toast.LENGTH_SHORT).show();
+            return;
+        }
         int date = diffDate();
         ArrayList<String> spotlist =new ArrayList<>();
         for(int i=0;i<adapter.getCount(); i++){
@@ -242,7 +261,12 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             selectedcity = city[position];
-            iscitySelected = true;
+            if(selectedcity.equals(city[0])){
+                iscitySelected = false;
+            }
+            else{
+                iscitySelected = true;
+            }
             filter();
         }
         @Override

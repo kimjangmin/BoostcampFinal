@@ -31,7 +31,7 @@ public class Fragment2Adapter extends RecyclerView.Adapter<Fragment2Adapter.Frag
     Context context;
     public Fragment2Adapter(ArrayList<TimeLineModel> list, Context ctx, CustomClickListener customClickListener){
         timeLineModelList = list;
-        Log.i("TAG","Fragment Adapter constructure listcount = "+timeLineModelList.size());
+        Log.i("GAG","Fragment2 Adapter constructure listcount = "+timeLineModelList.size());
         context = ctx;
         this.customClickListener = customClickListener;
     }
@@ -59,7 +59,6 @@ public class Fragment2Adapter extends RecyclerView.Adapter<Fragment2Adapter.Frag
 
     @Override
     public int getItemCount() {
-        Log.i("TAG","Adapter size = "+timeLineModelList.size());
         return timeLineModelList.size();
     }
     public void update(ArrayList<TimeLineModel> list){

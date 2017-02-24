@@ -1,9 +1,6 @@
 package com.jm.gon.triphelper.functionplan2;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +15,6 @@ import com.jm.gon.triphelper.R;
 import com.vipul.hp_hp.timelineview.TimelineView;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -58,8 +54,8 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TimeLi
     @Override
     public void onBindViewHolder(final TimeLineViewHolder holder, int position) {
         clickposition = position;
-        holder.name.setText("title = "+timeLineModelList.get(position).getTitle()+ "\n " +
-                "addr = "+timeLineModelList.get(position).getAddr() + "\n tel ="+timeLineModelList.get(position).getTel());
+        holder.title.setText(timeLineModelList.get(position).getTitle());
+        holder.addr.setText(timeLineModelList.get(position).getAddr());
         Glide.with(context)
                 .load(timeLineModelList.get(position).getUrl())
                 .bitmapTransform(new CropCircleTransformation(context))
@@ -70,7 +66,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TimeLi
                     }
                 });
     }
-
     @Override
     public int getItemCount() {
         return (timeLineModelList != null ? timeLineModelList.size() : 0);
@@ -78,15 +73,17 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TimeLi
 
 
     public class TimeLineViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView name;
-        public  TimelineView mTimelineView;
+        private TextView title;
+        private TextView addr;
+        private  TimelineView mTimelineView;
 
         public TimeLineViewHolder(View itemView, int viewType) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.tx_name);
+            title = (TextView) itemView.findViewById(R.id.tv_TimeLineAdapter_title);
+            addr = (TextView)itemView.findViewById(R.id.tv_TimeLineAdapter_addr);
             mTimelineView = (TimelineView) itemView.findViewById(R.id.time_marker);
             mTimelineView.setOnClickListener(this);
-            name.setOnClickListener(this);
+            title.setOnClickListener(this);
             mTimelineView.initLine(viewType);
         }
         @Override

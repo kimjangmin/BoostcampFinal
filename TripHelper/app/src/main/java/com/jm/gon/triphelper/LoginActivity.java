@@ -63,6 +63,7 @@ public class LoginActivity extends Activity {
                 graphRequest.setParameters(parameters);
                 graphRequest.executeAsync();
                 startActivity(intent);
+                finish();
             }
 
             @Override

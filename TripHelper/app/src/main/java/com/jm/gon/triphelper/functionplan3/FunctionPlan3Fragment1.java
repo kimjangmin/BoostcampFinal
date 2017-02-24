@@ -50,7 +50,7 @@ public class FunctionPlan3Fragment1 extends Fragment implements CustomClickListe
         rv_fragment1 = (RecyclerView)view.findViewById(R.id.rv_fragment1);
 
         bd_timeLineModel = getArguments().getParcelable("model");
-        Log.i("TAG","why!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.i("GAG","11111111111111111111111111111");
         Log.i("TAG","why "+bd_timeLineModel.getTitle());
         Log.i("TAG","why2 "+bd_timeLineModel.getMapx());
         Log.i("TAG","why!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -132,6 +132,7 @@ public class FunctionPlan3Fragment1 extends Fragment implements CustomClickListe
                 urlBuilder.append("&"+URLEncoder.encode("mapY","UTF-8") + "=" + URLEncoder.encode(bd_timeLineModel.getMapy(),"UTF-8"));
                 urlBuilder.append("&"+URLEncoder.encode("radius","UTF-8") + "=" + URLEncoder.encode("5000","UTF-8"));
                 urlBuilder.append("&"+URLEncoder.encode("numOfRows","UTF-8")+"=" +URLEncoder.encode("100","UTF-8"));
+                Log.i("GAG","Fragment1 url = "+urlBuilder.toString());
                 } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -151,7 +152,7 @@ public class FunctionPlan3Fragment1 extends Fragment implements CustomClickListe
                         continue;
                     }
                     TimeLineModel timeLineModel = new TimeLineModel();
-                    timeLineModel.setTel(tmp.getString("title"));
+                    timeLineModel.setTitle(tmp.getString("title"));
                     if (tmp.has("firstimage")) {
                         timeLineModel.setUrl(tmp.getString("firstimage"));
                     }

@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -61,6 +62,8 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_cameramain);
         iv_FunctionCamera_catpureImage = (ImageView) findViewById(R.id.iv_FunctionCamera_catpureImage);
         tv_FunctionCamera_captureText = (TextView) findViewById(R.id.tv_FunctionCamera_captureText);

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.jm.gon.triphelper.functionplan2.TimeLineAdapter;
 import com.jm.gon.triphelper.functionplan2.TimeLineModel;
@@ -61,6 +62,8 @@ public class FunctionPlan2 extends AppCompatActivity implements CustomClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_function_plan2);
         Intent intent = getIntent();
         date = intent.getIntExtra("date",-1);
@@ -69,7 +72,7 @@ public class FunctionPlan2 extends AppCompatActivity implements CustomClickListe
         spotList = (ArrayList<String>) intent.getSerializableExtra("spot");
         spotCount = spotList.size();
         dfs_min =999999999;
-        locationXY = new String[spotCount][spotCount];
+        locationXY = new String[spotCount][2];
         dfs_map = new int[spotCount][spotCount];
         dfs_visit = new boolean[spotCount];
         Arrays.fill(dfs_visit, Boolean.FALSE);
@@ -112,23 +115,9 @@ public class FunctionPlan2 extends AppCompatActivity implements CustomClickListe
                     break;
                 case AREABASE :
                     urlBuilder.append("&"+URLEncoder.encode("areaCode","UTF-8") + "=" + URLEncoder.encode(params[0],"UTF-8"));
-                    /*
-                    urlBuilder.append("&" + URLEncoder.encode("contentTypeId", "UTF-8") + "=" );
-                    urlBuilder.append("&"+URLEncoder.encode("sigunguCode","UTF-8") + "=");
-                    urlBuilder.append("&"+URLEncoder.encode("cat1","UTF-8") + "=");
-                    urlBuilder.append("&"+URLEncoder.encode("cat2","UTF-8") + "=");
-                    urlBuilder.append("&"+URLEncoder.encode("cat3","UTF-8") + "=");
-                    */
                     break;
                 case KEYWORD :
                     urlBuilder.append("&" + URLEncoder.encode("keyword", "UTF-8") + "=" + URLEncoder.encode(params[0],"UTF-8"));
-                    /*
-                    urlBuilder.append("&"+URLEncoder.encode("areaCode","UTF-8") + "=");
-                    urlBuilder.append("&"+URLEncoder.encode("sigunguCode","UTF-8") + "=");
-                    urlBuilder.append("&"+URLEncoder.encode("cat1","UTF-8") + "=");
-                    urlBuilder.append("&"+URLEncoder.encode("cat2","UTF-8") + "=");
-                    urlBuilder.append("&"+URLEncoder.encode("cat3","UTF-8") + "=");
-                    */
                     break;
             }
         } catch (UnsupportedEncodingException e) {
@@ -160,12 +149,6 @@ public class FunctionPlan2 extends AppCompatActivity implements CustomClickListe
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.i("TAG","title = "+timeLineModel.getTitle());
-        Log.i("TAG","addr = "+ timeLineModel.getTel());
-        Log.i("TAG","tel = "+ timeLineModel.getTel());
-        Log.i("TAG","mapX = "+timeLineModel.getMapx());
-        Log.i("TAG","mapY = "+timeLineModel.getMapy());
-        Log.i("TAG","firstimage = "+timeLineModel.getUrl());
         return timeLineModel;
     }
     public void parsingJson(String parsingStr, int type){

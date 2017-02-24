@@ -19,14 +19,14 @@ public class FunctionPlan3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_function_plan3);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Tab One"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab Two"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab Three"));
+        tabLayout.addTab(tabLayout.newTab().setText("주변 관광지"));
+        tabLayout.addTab(tabLayout.newTab().setText("먹거리"));
+        tabLayout.addTab(tabLayout.newTab().setText("숙소"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         Intent intent = getIntent();
         TimeLineModel timeLineModel = intent.getParcelableExtra("model");
-        Log.i("TAG","FucntionPlan3 start");
+        Log.i("GAG","FucntionPlan3 start");
         Log.i("TAG","xxxxxxxxxxxxxxxxxxxxxxxxxx");
         Log.i("TAG","timeLineMode x = "+timeLineModel.getMapx());
         Log.i("TAG","xxxxxxxxxxxxxxxxxxxxxxxxxx");
@@ -37,6 +37,7 @@ public class FunctionPlan3 extends AppCompatActivity {
 
         // Creating TabPagerAdapter adapter
         FunctionPlan3PageAdapter pagerAdapter = new FunctionPlan3PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), timeLineModel);
+        Log.i("GAG","FunctionPlan3 Page Init tabLayoutcount = "+tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 

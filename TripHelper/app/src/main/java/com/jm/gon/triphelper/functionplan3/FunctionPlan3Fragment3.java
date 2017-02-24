@@ -46,13 +46,13 @@ public class FunctionPlan3Fragment3 extends Fragment implements CustomClickListe
         rv_fragment3 = (RecyclerView)view.findViewById(R.id.rv_fragment3);
 
         bd_timeLineModel = getArguments().getParcelable("model");
-        Log.i("TAG","why!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.i("GAG","33333333333333333333333333333");
         Log.i("TAG","why "+bd_timeLineModel.getTitle());
         Log.i("TAG","why2 "+bd_timeLineModel.getMapx());
         Log.i("TAG","why!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         timeLineModelList = new ArrayList<>();
-        new FunctionPlan3Fragment3.Frament3Async().execute();
+        new Frament3Async().execute();
 
         fragment3Adapter = new Fragment3Adapter((ArrayList<TimeLineModel>) timeLineModelList, getContext(), this);
         //여기서 동기화 문제가 일어나지 않을까...?
@@ -93,7 +93,6 @@ public class FunctionPlan3Fragment3 extends Fragment implements CustomClickListe
                 String tmp;
                 while ((tmp = rd.readLine()) != null) {
                     result = tmp;
-                    Log.i("TAG","result = "+result);
                 }
                 rd.close();
                 conn.disconnect();
@@ -108,18 +107,15 @@ public class FunctionPlan3Fragment3 extends Fragment implements CustomClickListe
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             parsingJson(s);
-            Log.i("TAG","Fragment before datasetChange");
             fragment3Adapter.notifyDataSetChanged();
-            Log.i("TAG","Fragment after datasetChange");
             fragment3Adapter.update((ArrayList<TimeLineModel>) timeLineModelList);
-            Log.i("TAG","Fragment after update");
         }
 
         private String maekUrl(){
             StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList");
             try {
                 urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=atukOUcyFBF9HGzl%2BxiZLpNPMA9%2FbxkkXpPcyRIqQfXSs3JMNNEkQ3Eosc1aZsRz0u58DKzMDXCpdghsmYpiaQ%3D%3D");
-                urlBuilder.append("&" + URLEncoder.encode("contentTypeId","UTF-8") + URLEncoder.encode("39","UTF-8"));
+                urlBuilder.append("&" + URLEncoder.encode("contentTypeId","UTF-8") + "=" + URLEncoder.encode("32","UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("listYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("AND", "UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("TripHelper", "UTF-8"));
@@ -129,6 +125,7 @@ public class FunctionPlan3Fragment3 extends Fragment implements CustomClickListe
                 urlBuilder.append("&"+URLEncoder.encode("mapY","UTF-8") + "=" + URLEncoder.encode(bd_timeLineModel.getMapy(),"UTF-8"));
                 urlBuilder.append("&"+URLEncoder.encode("radius","UTF-8") + "=" + URLEncoder.encode("5000","UTF-8"));
                 urlBuilder.append("&"+URLEncoder.encode("numOfRows","UTF-8")+"=" +URLEncoder.encode("100","UTF-8"));
+                Log.i("GAG","Fragment3 url = "+urlBuilder.toString());
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -143,12 +140,8 @@ public class FunctionPlan3Fragment3 extends Fragment implements CustomClickListe
                 JSONArray jsonArray = oobject.getJSONArray("item");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject tmp = jsonArray.getJSONObject(i);
-                    String contenttypeid = tmp.getString("contenttypeid");
-                    if (contenttypeid.equals("32") || contenttypeid.equals("39")) {
-                        continue;
-                    }
                     TimeLineModel timeLineModel = new TimeLineModel();
-                    timeLineModel.setTel(tmp.getString("title"));
+                    timeLineModel.setTitle(tmp.getString("title"));
                     if (tmp.has("firstimage")) {
                         timeLineModel.setUrl(tmp.getString("firstimage"));
                     }

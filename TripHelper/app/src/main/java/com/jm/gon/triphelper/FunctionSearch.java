@@ -9,56 +9,62 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Filter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.jm.gon.triphelper.db.DbHelper;
 import com.jm.gon.triphelper.db.DbTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class FunctionSearch extends AppCompatActivity {
+public class FunctionSearch extends AppCompatActivity implements TextWatcher {
 
-    FunctionSearchAdapter functionSearchAdapter;
-    EditText et_FunctionSearch_keyword;
-    ListView lv_FunctionSearch_list;
-    ArrayList<String> arrayList;
-    SQLiteDatabase sqLiteDatabase;
-    DbHelper helper;
-    Cursor cursor;
+   List<String> arrayList;
+
+    private AutoCompleteTextView actv_FunctionSearch;
+    private ImageButton ib_FunctionSearch_search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_function_search);
+        actv_FunctionSearch = (AutoCompleteTextView)findViewById(R.id.actv_FunctionSearch);
+        ib_FunctionSearch_search = (ImageButton)findViewById(R.id.ib_FunctionSearch_search);
+        arrayList = new ArrayList<>();
 
-        init();
-        setAdapter();
-        et_FunctionSearch_keyword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                FunctionSearch.this.functionSearchAdapter.getFilter().filter(s);
-            }
+        actv_FunctionSearch.addTextChangedListener(this);
 
+        ib_FunctionSearch_search.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+            public void onClick(View v) {
+                Intent intent = new Intent(FunctionSearch.this , DetailActivity.class);
+                intent.putExtra("title", actv_FunctionSearch.getText().toString());
+                startActivity(intent);
             }
         });
+
+        init();
     }
     public void init(){
-        et_FunctionSearch_keyword = (EditText)findViewById(R.id.et_FunctionSearch_keyword);
-        lv_FunctionSearch_list = (ListView)findViewById(R.id.lv_FunctionSearch_list);
+        SQLiteDatabase sqLiteDatabase;
+        DbHelper helper;
+        Cursor cursor;
         helper = new DbHelper(this);
         sqLiteDatabase = helper.getReadableDatabase();
         Intent intent = getIntent();
         String type = intent.getStringExtra("type");
+        Log.i("GAG","searching type = "+type);
 
-        if(type.equals("32") || type.equals("39")) {
-            Log.i("TAG","init if");
+        if(type.equals("32")){
+            ib_FunctionSearch_search.setImageDrawable(getResources().getDrawable(R.drawable.hotel));
             cursor = sqLiteDatabase.query(DbTable.AutoCompleteTable.TABLENAME,
                     null,
                     DbTable.AutoCompleteTable.CONTENTTYPEID+ " =? ",
@@ -66,8 +72,18 @@ public class FunctionSearch extends AppCompatActivity {
                     null,
                     null,
                     null);
-        }else{
-            Log.i("TAG","init else");
+        }else if( type.equals("39")){
+            ib_FunctionSearch_search.setImageDrawable(getResources().getDrawable(R.drawable.restaurant));
+            cursor = sqLiteDatabase.query(DbTable.AutoCompleteTable.TABLENAME,
+                    null,
+                    DbTable.AutoCompleteTable.CONTENTTYPEID+ " =? ",
+                    new String[]{type} ,
+                    null,
+                    null,
+                    null);
+        }
+        else{
+            ib_FunctionSearch_search.setImageDrawable(getResources().getDrawable(R.drawable.temple));
             cursor = sqLiteDatabase.query(DbTable.AutoCompleteTable.TABLENAME,
                     null,
                     DbTable.AutoCompleteTable.CONTENTTYPEID+" != ? and " + DbTable.AutoCompleteTable.CONTENTTYPEID + " != ?",
@@ -77,63 +93,29 @@ public class FunctionSearch extends AppCompatActivity {
                     null);
         }
         Log.i("TAG","cursor = "+cursor.getCount());
-        for(int i=0;i<cursor.getCount();i++){
+        arrayList.clear();
+        while(cursor.moveToNext()){
+            Log.i("TAG","cursor = "+cursor.getPosition());
             arrayList.add(cursor.getString(cursor.getColumnIndex(DbTable.AutoCompleteTable.TITLE)));
         }
-        String[] str = arrayList.toArray(new String[arrayList.size()]);
+        actv_FunctionSearch.setAdapter(new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                arrayList));
     }
-    private void setAdapter(){
-        functionSearchAdapter = new FunctionSearchAdapter(this, arrayList);
-        lv_FunctionSearch_list.setAdapter(functionSearchAdapter);
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
     }
-    public class KeywordFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            String str = constraint.toString();
-            FilterResults results = new Filter.FilterResults();
-            if(constraint != null && constraint.toString().length()>0){
-                ArrayList<String> filterlist = new ArrayList<>();
-                synchronized (this){
-                    for(int i = 0; i< arrayList.size(); i++){
-                        if(arrayList.get(i).contains(str)){
-                            filterlist.add(arrayList.get(i));
-                        }
-                    }
-                    results.count = filterlist.size();
-                    results.values = filterlist;
-                }
-            } else{
-                synchronized (this){
-                    results.count = arrayList.size();
-                    results.values = arrayList;
-                }
-            }
-            return results;
-        }
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            new listAsync().execute((ArrayList<String>[]) results.values);
-        }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
     }
-    public class listAsync extends AsyncTask<ArrayList<String>,Void, Void>{
-        @Override
-        protected Void doInBackground(ArrayList<String>... params) {
-            arrayList.clear();
-            if(params[0].size() >0){
-                for(int i=0;i<params[0].size() ; i++){
-                    arrayList.add(params[0].get(i));
-                }
-            }
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            if(!isCancelled()){
-                if(arrayList.size()>0){
-                    setAdapter();
-                }
-            }
-            super.onPostExecute(aVoid);
-        }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }

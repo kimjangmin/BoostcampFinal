@@ -8,51 +8,66 @@
     android:orientation="vertical"
     tools:context="com.jm.gon.triphelper.FunctionPlan1">
 
+    <android.support.v7.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/t_FunctionPlan1_toolbar"
+        app:titleTextColor="#fff"
+        android:background="@color/fontColor"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+    </android.support.v7.widget.Toolbar>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
         <TextView
             android:text="Date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/fontColor"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:textAlignment="center"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
             android:padding="10dp">
-            <Button
-                android:id="@+id/btn_FunctionPlan1_DateStart"
-                android:text="start"
-                android:background="@color/fontColor"
-                android:textColor="@color/bgColor"
+            <ImageButton
+                android:id="@+id/ib_FunctionPlan1_Departure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:theme="@style/Widget.AppCompat.Button"/>
-
+                android:background="@android:color/transparent"
+                android:src="@drawable/departure"/>
             <TextView
                 android:id="@+id/tv_FunctionPlan1_DateStart"
-                android:text="startdate"
+                android:text="Depature date"
+                android:textSize="20dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/fontColor"
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/btn_FunctionPlan1_DateEnd"
-                android:background="@color/fontColor"
-                android:textColor="@color/bgColor"
-                android:text="end"
+            android:orientation="horizontal"
+            android:padding="10dp">
+            <ImageButton
+                android:id="@+id/ib_FunctionPlan1_Arrival"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/arrival"/>
             <TextView
                 android:id="@+id/tv_FunctionPlan1_DateEnd"
-                android:text="enddate"
+                android:text="Arrival date"
+                android:textSize="20dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/fontColor"
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -60,12 +75,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:orientation="horizontal">
-            <TextView
+            <ImageView
                 android:id="@+id/tv_FunctionPlan1_theme"
                 android:text="theme"
+                android:src="@drawable/theme"
                 android:layout_width="40dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="40dp" />
             <Spinner
                 android:id="@+id/sp_FunctionPlan1_theme"
                 android:layout_width="345dp"
@@ -76,12 +93,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:orientation="horizontal">
-            <TextView
+            <ImageView
                 android:id="@+id/tv_FunctionPlan1_city"
                 android:text="city"
+                android:src="@drawable/city"
                 android:layout_width="40dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="40dp" />
             <Spinner
                 android:id="@+id/sp_FunctionPlan1_city"
                 android:layout_width="345dp"
@@ -93,6 +112,8 @@
         <TextView
             android:text="essential spot"
             android:textAlignment="center"
+            android:textColor="@color/fontColor"
+            android:textSize="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
@@ -102,16 +123,17 @@
 
             <AutoCompleteTextView
                 android:id="@+id/actv_FunctionPlan1_spot"
-                android:layout_width="300dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
                 android:dropDownHeight="175dp"
+                android:textColor="@color/fontColor"
                 android:completionThreshold="1" />
-            <Button
-                android:id="@+id/btn_FunctionPlan1_add"
-                android:text="add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <ImageButton
+                android:id="@+id/iv_FunctionPlan1_add"
+                android:background="@android:color/transparent"
+                android:src="@drawable/plus"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
 
         </LinearLayout>
 

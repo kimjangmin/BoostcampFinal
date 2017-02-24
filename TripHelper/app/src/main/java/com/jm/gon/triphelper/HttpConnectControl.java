@@ -27,20 +27,30 @@ import java.util.concurrent.ExecutionException;
  * Created by 김장민 on 2017-02-23.
  */
 
-public class HttpConnectControl {
+public class HttpConnectControl extends Thread{
     public final String LOCATIONBASE = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList";
     public final String AREABASE = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList";
     public final String KEYWORD = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword";
     public final String FESTIVAL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchFestival";
 
     private String asyncResult;
-    private List<TimeLineModel> modelList;
+    private ArrayList<TimeLineModel> modelList;
     private Context context;
 
-    public HttpConnectControl(Context ctx){
+    MainActivityAdapter adapter;
+
+    private String str;
+    private String[] arrStr;
+
+    public HttpConnectControl(Context ctx, MainActivityAdapter adapter1){
         asyncResult = null;
         modelList = new ArrayList<>();
         context = ctx;
+        adapter = adapter1;
+    }
+    public void run(){
+        getResult(str, arrStr);
+        Log.i("TAG","Trhead size = "+modelList.size());
     }
 
     public ArrayList<TimeLineModel> getResult(String keyword, String[] params){
@@ -159,6 +169,9 @@ public class HttpConnectControl {
                 Log.i("TAG","this is jsonobject");
                 modelList.add( doJson( (JSONObject)object ) );
                 Log.i("TAG","complete parsing modellist size = "+modelList.size());
+            }
+            if(adapter != null) {
+                adapter.update(modelList);
             }
         } catch (JSONException e) {
             e.printStackTrace();

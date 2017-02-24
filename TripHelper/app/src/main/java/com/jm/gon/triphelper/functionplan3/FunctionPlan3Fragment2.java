@@ -47,7 +47,7 @@ public class FunctionPlan3Fragment2 extends Fragment implements CustomClickListe
         rv_fragment2 = (RecyclerView)view.findViewById(R.id.rv_fragment2);
 
         bd_timeLineModel = getArguments().getParcelable("model");
-        Log.i("TAG","why!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.i("GAG","22222222222222222222222222");
         Log.i("TAG","why "+bd_timeLineModel.getTitle());
         Log.i("TAG","why2 "+bd_timeLineModel.getMapx());
         Log.i("TAG","why!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -120,7 +120,7 @@ public class FunctionPlan3Fragment2 extends Fragment implements CustomClickListe
             StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList");
             try {
                 urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=atukOUcyFBF9HGzl%2BxiZLpNPMA9%2FbxkkXpPcyRIqQfXSs3JMNNEkQ3Eosc1aZsRz0u58DKzMDXCpdghsmYpiaQ%3D%3D");
-                urlBuilder.append("&" + URLEncoder.encode("contentTypeId","UTF-8") + URLEncoder.encode("32","UTF-8"));
+                urlBuilder.append("&" + URLEncoder.encode("contentTypeId","UTF-8") + "=" + URLEncoder.encode("39","UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("listYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("AND", "UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("TripHelper", "UTF-8"));
@@ -130,6 +130,7 @@ public class FunctionPlan3Fragment2 extends Fragment implements CustomClickListe
                 urlBuilder.append("&"+URLEncoder.encode("mapY","UTF-8") + "=" + URLEncoder.encode(bd_timeLineModel.getMapy(),"UTF-8"));
                 urlBuilder.append("&"+URLEncoder.encode("radius","UTF-8") + "=" + URLEncoder.encode("5000","UTF-8"));
                 urlBuilder.append("&"+URLEncoder.encode("numOfRows","UTF-8")+"=" +URLEncoder.encode("100","UTF-8"));
+                Log.i("GAG","Fragment2 url = "+urlBuilder.toString());
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -145,7 +146,7 @@ public class FunctionPlan3Fragment2 extends Fragment implements CustomClickListe
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject tmp = jsonArray.getJSONObject(i);
                     TimeLineModel timeLineModel = new TimeLineModel();
-                    timeLineModel.setTel(tmp.getString("title"));
+                    timeLineModel.setTitle(tmp.getString("title"));
                     if (tmp.has("firstimage")) {
                         timeLineModel.setUrl(tmp.getString("firstimage"));
                     }
