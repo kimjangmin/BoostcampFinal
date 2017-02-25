@@ -7,15 +7,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.jm.gon.triphelper.functionplan3.FunctionPlan3">
+    <FrameLayout
+        android:id="@+id/fl_FunctionPlan3_ToolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:background="@color/bgColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.Toolbar>
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/logo"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+    </FrameLayout>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bgColor"
-        app:tabTextColor="@color/fontColor"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        app:tabSelectedTextColor="@color/fontColor"
+        app:tabTextColor="@color/fontColor" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

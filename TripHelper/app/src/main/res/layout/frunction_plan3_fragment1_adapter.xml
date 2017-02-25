@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
     <LinearLayout
+        android:id="@+id/ll_fragment1_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -44,6 +45,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
         android:layout_height="2dp"
-        android:background="@color/bgColor"/>
+        android:background="@color/fontColor"/>
 </LinearLayout>

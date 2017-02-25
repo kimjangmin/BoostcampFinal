@@ -1,6 +1,8 @@
 package com.jm.gon.triphelper;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -28,6 +30,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jm.gon.triphelper.db.DbHelper;
+import com.jm.gon.triphelper.db.DbTable;
+import com.jm.gon.triphelper.db.PhotoHelper;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -51,10 +57,13 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
     private EditText et_FunctionCamera_captureEdit;
 
     private Button bt_FunctionCamera_fontbm;
-    private Button bt_FunctionCamera_fontddalgi;
+    private Button bt_FunctionCamera_fontbmche;
     private Button bt_FunctionCamera_fontmonsori;
     private Button bt_FunctionCamera_fonttvnbold;
     private Button bt_FunctionCamera_fonttvnlight;
+
+    private SQLiteDatabase sqLiteDatabase;
+    private DbHelper helper;
 
     float oldXvalue;
     float oldYvalue;
@@ -65,36 +74,56 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_cameramain);
+
+        AndroidBug5497Workaround.assistActivity(this);
+
         iv_FunctionCamera_catpureImage = (ImageView) findViewById(R.id.iv_FunctionCamera_catpureImage);
         tv_FunctionCamera_captureText = (TextView) findViewById(R.id.tv_FunctionCamera_captureText);
         et_FunctionCamera_captureEdit = (EditText) findViewById(R.id.et_FunctionCamera_captureEdit);
         fl_FunctionCamera_captureLayout = (FrameLayout)findViewById(R.id.fl_FunctionCamera_captureLayout);
         t_FunctionCamera_toolbar = (Toolbar)findViewById(R.id.t_FunctionCamera_toolbar);
         bt_FunctionCamera_fontbm = (Button)findViewById(R.id.bt_FunctionCamera_fontbm);
-        bt_FunctionCamera_fontddalgi = (Button)findViewById(R.id.bt_FunctionCamera_fontddalgi);
+        bt_FunctionCamera_fontbmche = (Button)findViewById(R.id.bt_FunctionCamera_fontbmche);
         bt_FunctionCamera_fontmonsori = (Button)findViewById(R.id.bt_FunctionCamera_fontmonsori);
         bt_FunctionCamera_fonttvnbold = (Button)findViewById(R.id.bt_FunctionCamera_fonttvnbold);
         bt_FunctionCamera_fonttvnlight = (Button)findViewById(R.id.bt_FunctionCamera_fonttvnlight);
 
         bt_FunctionCamera_fontbm.setOnClickListener(fontbmClickListener);
-        bt_FunctionCamera_fontddalgi.setOnClickListener(fontddalgiClickListener);
+        bt_FunctionCamera_fontbmche.setOnClickListener(fontddalgiClickListener);
         bt_FunctionCamera_fontmonsori.setOnClickListener(fontmonsoriClickListener);
         bt_FunctionCamera_fonttvnbold.setOnClickListener(fonttvnboldClickListener);
         bt_FunctionCamera_fonttvnlight.setOnClickListener(fonttvnlightClickListener);
 
+        typeface = Typeface.createFromAsset(getAssets(),"fonts/bm.ttf");
+        bt_FunctionCamera_fontbm.setTypeface(typeface);
+        typeface = Typeface.createFromAsset(getAssets(),"fonts/bmche.ttf");
+        bt_FunctionCamera_fontbmche.setTypeface(typeface);
+        typeface = Typeface.createFromAsset(getAssets(),"fonts/monsori.otf");
+        bt_FunctionCamera_fontmonsori.setTypeface(typeface);
+        typeface = Typeface.createFromAsset(getAssets(),"fonts/tvn_Bold.ttf");
+        bt_FunctionCamera_fonttvnbold.setTypeface(typeface);
+        typeface = Typeface.createFromAsset(getAssets(),"fonts/tvn_Light.ttf");
+        bt_FunctionCamera_fonttvnlight.setTypeface(typeface);
+
         tv_FunctionCamera_captureText.setOnTouchListener(this);
+        tv_FunctionCamera_captureText.setOnClickListener(getFocusfromEditText);
         et_FunctionCamera_captureEdit.isFocused();
         et_FunctionCamera_captureEdit.addTextChangedListener(watchCatpureEdit);
+        et_FunctionCamera_captureEdit.requestFocus();
+
+        helper = new DbHelper(this);
+        sqLiteDatabase = helper.getWritableDatabase();
 
         setSupportActionBar(t_FunctionCamera_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         doTakePhotoAction();
-
     }
+
     TextWatcher watchCatpureEdit = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            et_FunctionCamera_captureEdit.setVisibility(View.INVISIBLE);
         }
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -106,6 +135,12 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
         }
     };
 
+    View.OnClickListener getFocusfromEditText = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            et_FunctionCamera_captureEdit.requestFocus();
+        }
+    };
     View.OnClickListener fontbmClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -116,7 +151,7 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
     View.OnClickListener fontddalgiClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            typeface = Typeface.createFromAsset(getAssets(), "fonts/ddalgi.ttf");
+            typeface = Typeface.createFromAsset(getAssets(), "fonts/bmche.ttf");
             tv_FunctionCamera_captureText.setTypeface(typeface);
         }
     };
@@ -183,7 +218,14 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
             return;
         }
 
-        savePath += "/"+ "tmp+"+String.valueOf(System.currentTimeMillis())+".jpg";
+        savePath += "/"+ "trip"+String.valueOf(System.currentTimeMillis())+".jpg";
+
+        ContentValues cv = new ContentValues();
+        cv.put(DbTable.AutoCompleteTable.PHOTOURL, savePath);
+        cv.put(DbTable.AutoCompleteTable.PHOTOCOMMENT, tv_FunctionCamera_captureText.getText().toString());
+        Log.i("LOG","text = "+tv_FunctionCamera_captureText.getText().toString());
+
+        sqLiteDatabase.insert(DbTable.AutoCompleteTable.PHOTOTABLENAME, null, cv);
 
         FileOutputStream fileOutputStream = null;
         try {
@@ -225,8 +267,6 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
     }
 
     private Bitmap setReduceImageSize(){
-        int targetImageViewWidth = iv_FunctionCamera_catpureImage.getWidth();
-        int targetImageViewHeight = iv_FunctionCamera_catpureImage.getHeight();
 
         BitmapFactory.Options bitOptions = new BitmapFactory.Options();
         bitOptions.inJustDecodeBounds = true;
@@ -250,6 +290,7 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
                 finish();
                 return true;
             case R.id.functionCamera_save:
+                et_FunctionCamera_captureEdit.clearFocus();
                 capture();
                 finish();
                 return true;

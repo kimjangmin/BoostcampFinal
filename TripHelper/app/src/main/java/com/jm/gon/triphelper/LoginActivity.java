@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -24,7 +26,7 @@ public class LoginActivity extends Activity {
 
     private CallbackManager callbackManager;
     private LoginButton LoginActivity_LoginBtn;
-
+    private Button justlogin;
 
 
     @Override
@@ -33,9 +35,9 @@ public class LoginActivity extends Activity {
 
         FacebookSdk.sdkInitialize(this);
 
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login);
         final Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
+        justlogin = (Button)findViewById(R.id.LoginActivity_LoginBtnCommon);
 
         if(Profile.getCurrentProfile()!=null){
             Log.d("TAG","이름 = "+Profile.getCurrentProfile().getFirstName()+Profile.getCurrentProfile().getLastName());
@@ -43,6 +45,13 @@ public class LoginActivity extends Activity {
             Log.i("TAG","something = "+Profile.getCurrentProfile().getName());
             startActivity(intent);
         }
+
+        justlogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent);
+            }
+        });
 
 
         callbackManager = CallbackManager.Factory.create();
@@ -76,6 +85,7 @@ public class LoginActivity extends Activity {
 
             }
         });
+
 
         /*
         커스텀으로 버튼을 만들어서 사용할 때

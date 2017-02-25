@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/bgCamera"
     tools:context="com.jm.gon.triphelper.FunctionSearch">
 
     <ImageView
@@ -23,9 +24,11 @@
         android:layout_alignParentStart="true">
         <AutoCompleteTextView
             android:id="@+id/actv_FunctionSearch"
-            android:layout_width="350dp"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:textColor="@color/fontColor"
+            android:completionThreshold="1"
             android:dropDownHeight="175dp" />
         <ImageButton
             android:id="@+id/ib_FunctionSearch_search"
@@ -34,6 +37,5 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_below="@+id/autoCompleteTextView2" />
-
     </LinearLayout>
 </RelativeLayout>

@@ -1,43 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
+    android:layout_height="fill_parent"
+    android:background="@color/bgCamera">
     <android.support.v7.widget.Toolbar
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/t_FunctionCamera_toolbar"
-        app:titleTextColor="#fff"
-        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/bgCamera"
+        android:background="@android:color/transparent"
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:layout_height="30dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentTop="true">
     </android.support.v7.widget.Toolbar>
-
     <FrameLayout
         android:id="@+id/fl_FunctionCamera_captureLayout"
         android:layout_width="match_parent"
-        android:layout_height="475dp">
+        android:layout_height="600dp"
+        android:layout_below="@id/t_FunctionCamera_toolbar">
         <ImageView
             android:id="@+id/iv_FunctionCamera_catpureImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="centerInside"
-            android:background="#eee"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
             />
         <EditText
             android:id="@+id/et_FunctionCamera_captureEdit"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textCursorDrawable="@color/fontColor"
+            android:textColor="@color/fontCamera"/>
         <TextView
             android:id="@+id/tv_FunctionCamera_captureText"
             android:layout_gravity="center"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </FrameLayout>
+
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,12 +56,11 @@
                 android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily=""
                 android:text="배민"/>
             <Button
-                android:id="@+id/bt_FunctionCamera_fontddalgi"
+                android:id="@+id/bt_FunctionCamera_fontbmche"
                 android:background="@android:color/transparent"
-                android:text="딸기"
+                android:text="배민2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <Button
@@ -75,4 +83,5 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </HorizontalScrollView>
-</LinearLayout>
+
+</RelativeLayout>

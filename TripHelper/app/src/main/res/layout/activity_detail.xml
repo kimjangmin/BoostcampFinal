@@ -6,87 +6,113 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.jm.gon.triphelper.DetailActivity">
-
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_DetailActivity"
-        android:layout_marginTop="20dp"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
-    </android.support.v4.view.ViewPager>
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:background="@color/bgColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.Toolbar>
+        <ImageView
+            android:src="@drawable/logo"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+    </FrameLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_DetailActivity"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
-            <ImageView
-                android:src="@drawable/title"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/tv_DetailActivity_title"
-                android:textColor="@color/fontColor"
-                android:textSize="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_height="300dp">
+        </android.support.v4.view.ViewPager>
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
-            <ImageView
-                android:src="@drawable/tel"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/tv_DetailActivity_tel"
-                android:textColor="@color/fontColor"
-                android:textSize="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
-            <ImageView
-                android:src="@drawable/addr"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/tv_DetailActivity_addr"
-                android:textColor="@color/fontColor"
-                android:textSize="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+                    <ImageView
+                        android:src="@drawable/title"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+                    <TextView
+                        android:id="@+id/tv_DetailActivity_title"
+                        android:textColor="@color/fontColor"
+                        android:textSize="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
-            <ImageView
-                android:src="@drawable/info"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/tv_DetailActivity_overview"
-                android:textColor="@color/fontColor"
-                android:textSize="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+                    <ImageView
+                        android:src="@drawable/tel"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+                    <TextView
+                        android:id="@+id/tv_DetailActivity_tel"
+                        android:textColor="@color/fontColor"
+                        android:textSize="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+                    <ImageView
+                        android:src="@drawable/addr"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+                    <TextView
+                        android:id="@+id/tv_DetailActivity_addr"
+                        android:textColor="@color/fontColor"
+                        android:textSize="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+                    <ImageView
+                        android:src="@drawable/info"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+                    <TextView
+                        android:id="@+id/tv_DetailActivity_overview"
+                        android:textColor="@color/fontColor"
+                        android:textSize="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
     </LinearLayout>
 
 </LinearLayout>

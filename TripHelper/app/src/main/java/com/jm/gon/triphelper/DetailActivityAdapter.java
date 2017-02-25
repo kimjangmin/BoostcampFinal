@@ -27,7 +27,12 @@ public class DetailActivityAdapter extends PagerAdapter {
     }
     @Override
     public int getCount() {
-        return imageUrl.length;
+        if(imageUrl == null)
+        {
+            return 0;
+        }else {
+            return imageUrl.length;
+        }
     }
 
     @Override
@@ -42,7 +47,7 @@ public class DetailActivityAdapter extends PagerAdapter {
         ImageView imageView = (ImageView)v.findViewById(R.id.iv_DetailActivityAdapter);
         TextView textView = (TextView)v.findViewById(R.id.tv_DetailActivityAdapter);
         textView.setText((position+1)+" / "+imageUrl.length);
-        Glide.with(context).load(imageUrl[position]).into(imageView);
+        Glide.with(context).load(imageUrl[position]).placeholder(R.drawable.noimagebig).into(imageView);
         container.addView(v);
         return v;
     }

@@ -43,7 +43,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         holder.title.setText(modelList.get(position).getTitle());
         holder.date.setText(modelList.get(position).getStartdate()+" ~ "+modelList.get(position).getEnddate());
         holder.addr.setText(modelList.get(position).getAddr());
-        Glide.with(context).load(modelList.get(position).getUrl()).into(holder.iv);
+        Glide.with(context).load(modelList.get(position).getUrl()).placeholder(R.drawable.noimagebig).into(holder.iv);
     }
 
     @Override

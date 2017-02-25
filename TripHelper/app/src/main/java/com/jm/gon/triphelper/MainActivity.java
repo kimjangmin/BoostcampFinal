@@ -1,25 +1,32 @@
 package com.jm.gon.triphelper;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jm.gon.triphelper.Network_MainActivity.NetworkMethod;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.jm.gon.triphelper.db.DbHelper;
+import com.jm.gon.triphelper.db.DbTable;
+import com.jm.gon.triphelper.db.PhotoHelper;
 import com.jm.gon.triphelper.functionplan2.TimeLineModel;
+import com.jm.gon.triphelper.mypage.MyActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -108,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
         final PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Toast.makeText(MainActivity.this, "permission", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, FunctionCamera.class);
                 startActivity(intent);
             }
@@ -160,8 +166,24 @@ public class MainActivity extends AppCompatActivity {
         ibn_ActivityMain_mypage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, GetAlbum.class);
+                DbHelper helper = new DbHelper(getApplicationContext());
+                SQLiteDatabase sqLiteDatabase = helper.getWritableDatabase();
+                ArrayList<String> list = new ArrayList<String>();
+                File folder = new File(Environment.getExternalStorageDirectory().getPath() + "/triphelper");
+                File[] listFiles = folder.listFiles();
+                Cursor cursor = sqLiteDatabase.query(DbTable.AutoCompleteTable.PHOTOTABLENAME, null, null,null,null,null,null);
+                for (File fIle : listFiles) {
+                    list.add(fIle.toString());
+                }
+                    for (String str : list) {
+                        ContentValues cv = new ContentValues();
+                        cv.put(DbTable.AutoCompleteTable.PHOTOURL, str);
+                        cv.put(DbTable.AutoCompleteTable.PHOTOCOMMENT, "개 간 지");
+                        sqLiteDatabase.insert(DbTable.AutoCompleteTable.PHOTOTABLENAME, null, cv);
+                    }
+                Intent intent = new Intent(MainActivity.this, MyActivity.class);
                 startActivity(intent);
+//                Toast.makeText(getApplicationContext(), " end", Toast.LENGTH_LONG).show();
             }
         });
 

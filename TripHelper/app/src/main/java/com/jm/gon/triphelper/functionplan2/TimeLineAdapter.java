@@ -1,6 +1,7 @@
 package com.jm.gon.triphelper.functionplan2;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,12 +77,15 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TimeLi
         private TextView title;
         private TextView addr;
         private  TimelineView mTimelineView;
+        private CardView cd_TimeLineAdapter;
 
         public TimeLineViewHolder(View itemView, int viewType) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.tv_TimeLineAdapter_title);
             addr = (TextView)itemView.findViewById(R.id.tv_TimeLineAdapter_addr);
             mTimelineView = (TimelineView) itemView.findViewById(R.id.time_marker);
+            cd_TimeLineAdapter = (CardView)itemView.findViewById(R.id.cd_TimeLineAdapter);
+            cd_TimeLineAdapter.setOnClickListener(this);
             mTimelineView.setOnClickListener(this);
             title.setOnClickListener(this);
             mTimelineView.initLine(viewType);

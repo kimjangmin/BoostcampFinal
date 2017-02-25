@@ -19,10 +19,16 @@ public class DbHelper extends SQLiteOpenHelper {
                 DbTable.AutoCompleteTable.TITLE +" string not null, "+
                 DbTable.AutoCompleteTable.CONTENTTYPEID + " string not null, "+
                 DbTable.AutoCompleteTable.AREACODE + " string not null);");
+
+        db.execSQL("create table "+ DbTable.AutoCompleteTable.PHOTOTABLENAME +" ( "+
+                " _id integer primary key autoincrement, " +
+                DbTable.AutoCompleteTable.PHOTOURL +" string not null, "+
+                DbTable.AutoCompleteTable.PHOTOCOMMENT + " string not null);");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table " + DbTable.AutoCompleteTable.TABLENAME);
+        db.execSQL("drop table " + DbTable.AutoCompleteTable.PHOTOTABLENAME);
         onCreate(db);
     }
 }

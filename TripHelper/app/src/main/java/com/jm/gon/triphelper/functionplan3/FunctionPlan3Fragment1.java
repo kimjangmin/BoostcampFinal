@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jm.gon.triphelper.CustomClickListener;
+import com.jm.gon.triphelper.DetailActivity;
 import com.jm.gon.triphelper.FunctionPlan4;
 import com.jm.gon.triphelper.R;
 import com.jm.gon.triphelper.db.DbTable;
@@ -73,9 +74,14 @@ public class FunctionPlan3Fragment1 extends Fragment implements CustomClickListe
 
     @Override
     public void onClick(TimeLineModel timeLineModel) {
-//        Intent intent = new Intent(FunctionPlan3.class, FunctionPlan4.class);
-//        intent.putExtra("model",timeLineModel);
-//        startActivity(intent);
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra("title",timeLineModel.getTitle());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(String url) {
+
     }
 
     private class Frament1Async extends AsyncTask<Void, Void, String>{

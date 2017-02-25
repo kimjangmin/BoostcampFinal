@@ -5,28 +5,40 @@
     android:id="@+id/activity_my"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.jm.gon.triphelper.MyActivity">
+    tools:context="com.jm.gon.triphelper.mypage.MyActivity">
+    <FrameLayout
+        android:id="@+id/fl_MyActivity_ToolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:background="@color/bgColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.Toolbar>
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/logo"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+    </FrameLayout>
 
-    <LinearLayout
+    <android.support.design.widget.TabLayout
+        android:layout_below="@id/fl_MyActivity_ToolbarLayout"
+        android:id="@+id/tl_MyActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/bgColor"
+        app:tabTextColor="@color/fontColor"
+        app:tabSelectedTextColor="@color/fontColor"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_marginBottom="20dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <quatja.com.vorolay.VoronoiView
-            android:id="@+id/voronoi"
-            android:layout_width="wrap_content"
-            android:layout_height="600dp"
-            android:layout_margin="30dp"
-            app:show_border="true"
-            app:border_color="@color/fontColor"
-            app:border_width="3"
-            app:border_round="true"
-            app:generation_type="ordered" />
-
-    </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:layout_below="@id/tl_MyActivity"
+        android:id="@+id/vp_MyActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp" />
 
 </RelativeLayout>

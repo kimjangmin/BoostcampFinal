@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.jm.gon.triphelper.db.DbHelper;
 import com.jm.gon.triphelper.db.DbTable;
+import com.jm.gon.triphelper.functionplan2.FunctionPlan2;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_function_plan1);
+        setContentView(R.layout.activity_function_plan1_1);
 
         tv_FunctionPlan1_DateStart = (TextView)findViewById(R.id.tv_FunctionPlan1_DateStart);
         tv_FunctionPlan1_DateEnd = (TextView)findViewById(R.id.tv_FunctionPlan1_DateEnd);
@@ -90,6 +91,7 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
 
         setSupportActionBar(t_FunctionPlan1_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        t_FunctionPlan1_toolbar.setTitle("");
 
         GregorianCalendar calendar = new GregorianCalendar();
         year = calendar.get(Calendar.YEAR);
@@ -161,7 +163,6 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.Funcion_Plan1:
-
                 gettingInfo();
                 return true;
         }

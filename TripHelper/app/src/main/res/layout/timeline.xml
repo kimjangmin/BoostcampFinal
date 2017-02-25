@@ -11,17 +11,20 @@
             android:id="@+id/time_marker"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            app:marker="@drawable/noimage"
             app:marker_size="50dp"
             app:line_size="2dp"
             app:line="@color/fontColor"/>
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cd_TimeLineAdapter"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="75dp"
+            app:cardCornerRadius="20dp"
             android:layout_gravity="center_vertical">
             <LinearLayout
                 android:orientation="vertical"
@@ -42,7 +45,7 @@
                     android:id="@+id/tv_TimeLineAdapter_addr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
+                    android:textSize="10dp"
                     android:textColor="@color/fontColor"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"

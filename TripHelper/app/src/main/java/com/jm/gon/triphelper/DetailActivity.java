@@ -157,8 +157,6 @@ public class DetailActivity extends AppCompatActivity {
             tv_DetailActivity_addr.setText(addr);
             tv_DetailActivity_overview.setText(overview);
 
-            Log.i("TAG","urlArr size = "+urlArr.length);
-
             activityAdapter = new DetailActivityAdapter(getApplicationContext(), urlArr);
             vp_DetailActivity.setAdapter(activityAdapter);
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_login"
     android:orientation="vertical"
@@ -17,7 +18,12 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="182dp" />
-
+    <Button
+        android:layout_below="@+id/LoginActivity_LoginBtn"
+        android:text="그냥 시작하기"
+        android:id="@+id/LoginActivity_LoginBtnCommon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <ImageView
         android:id="@+id/iv_LoginActivity_logo"
         android:src="@drawable/logo"

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -53,6 +54,7 @@ public class Fragment2Adapter extends RecyclerView.Adapter<Fragment2Adapter.Frag
         Glide.with(context)
                 .load(timeLineModel.getUrl())
                 .bitmapTransform(new CropCircleTransformation(context))
+                .placeholder(R.drawable.noimage)
                 .into(holder.iv);
 
     }
@@ -66,21 +68,24 @@ public class Fragment2Adapter extends RecyclerView.Adapter<Fragment2Adapter.Frag
     }
 
     public class Fragment2ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        LinearLayout ll;
         ImageView iv;
         TextView title;
         TextView addr;
         TextView tel;
         public Fragment2ViewHolder(View itemView) {
             super(itemView);
+            ll = (LinearLayout)itemView.findViewById(R.id.ll_fragment1_layout);
             iv = (ImageView)itemView.findViewById(R.id.iv_fragment1_image);
             title = (TextView)itemView.findViewById(R.id.tv_fragment1_title);
             addr = (TextView)itemView.findViewById(R.id.tv_fragment1_addr);
             tel = (TextView)itemView.findViewById(R.id.tv_fragment1_tel);
+            ll.setOnClickListener(this);
         }
         @Override
         public void onClick(View v) {
             if(getAdapterPosition() != RecyclerView.NO_POSITION){
-                customClickListener.onClick(timeLineModelList.get(clickposition));
+                customClickListener.onClick(timeLineModelList.get(getAdapterPosition()));
             }
         }
     }

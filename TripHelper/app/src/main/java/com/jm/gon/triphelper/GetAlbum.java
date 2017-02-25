@@ -51,22 +51,11 @@ public class GetAlbum extends Activity {
 
     }
 
-    /**
-     * The Class ImageAdapter.
-     */
     private class ImageAdapter extends BaseAdapter {
 
-        /**
-         * The context.
-         */
-        private Activity context;
+        private Context context;
 
-        /**
-         * Instantiates a new image adapter.
-         *
-         * @param localContext the local context
-         */
-        public ImageAdapter(Activity localContext) {
+        public ImageAdapter(Context localContext) {
             context = localContext;
             images = haha();
         }
@@ -81,7 +70,6 @@ public class GetAlbum extends Activity {
             }
             return list;
         }
-
 
         public int getCount() {
             return images.size();
@@ -115,37 +103,5 @@ public class GetAlbum extends Activity {
             return picturesView;
         }
 
-        /**
-         * Getting All Images Path.
-         *
-         * @param activity
-         *            the activity
-         * @return ArrayList with images Path
-         */
-        private ArrayList<String> getAllShownImagesPath(Activity activity) {
-            Uri uri;
-            Cursor cursor;
-            int column_index_data, column_index_folder_name;
-            ArrayList<String> listOfAllImages = new ArrayList<String>();
-            String absolutePathOfImage = null;
-            uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-            Uri uri1 = Uri.parse(Environment.getExternalStorageDirectory()+"/triphelper");
-
-            String[] projection = { MediaStore.MediaColumns.DATA,
-                    MediaStore.Images.Media.BUCKET_DISPLAY_NAME };
-
-            cursor = activity.getContentResolver().query(uri, projection, null,
-                    null, null);
-
-            column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-            column_index_folder_name = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
-            while (cursor.moveToNext()) {
-                absolutePathOfImage = cursor.getString(column_index_data);
-
-                listOfAllImages.add(absolutePathOfImage);
-            }
-            return listOfAllImages;
-        }
     }
 }
