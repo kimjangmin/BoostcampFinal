@@ -32,7 +32,6 @@ import android.widget.TextView;
 
 import com.jm.gon.triphelper.db.DbHelper;
 import com.jm.gon.triphelper.db.DbTable;
-import com.jm.gon.triphelper.db.PhotoHelper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,6 +67,9 @@ public class FunctionCamera extends AppCompatActivity implements View.OnTouchLis
     float oldXvalue;
     float oldYvalue;
     Typeface typeface;
+
+    //카메라를 이용하여 사진을 찍고 자신의 사진위에 특별한 폰트와함께 기록을 남길수 있는 클래스입니다.
+    //triphelper라는 어플 전용 폴더에 사진이 저장되며 mypage에서 사진을 가져와 볼수있게해줍니다.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

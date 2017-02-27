@@ -61,9 +61,6 @@
         <activity
             android:name=".FunctionSearch"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".FunctionPlan4"
-            android:screenOrientation="portrait" />
         <activity android:name=".DetailActivity" />
         <activity android:name=".GetAlbum" />
         <activity android:name=".mypage.MyActivity" />

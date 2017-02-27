@@ -4,4 +4,13 @@
     <string name="functionCamera_save">save</string>
     <string name="functionPlan1_nextBtn">next</string>
     <string name="drawable_hotel"></string>
+    <string name="fontbm">배민</string>
+    <string name="fontbmche">배민체</string>
+    <string name="fontmonsori">몬소리</string>
+    <string name="fonttvnbold">무거움</string>
+    <string name="fonttvnlight">가벼움</string>
+    <string name="departure_date">출발 날짜</string>
+    <string name="arrival_date">도착 날짜</string>
+    <string name="essential_spot">꼭 가고싶은 곳</string>
+    <string name="share">share</string>
 </resources>

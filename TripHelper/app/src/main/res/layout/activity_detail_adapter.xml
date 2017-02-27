@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <TextView
-            android:text="count"
             android:layout_gravity="center_horizontal"
             android:id="@+id/tv_DetailActivityAdapter"
             android:layout_width="wrap_content"

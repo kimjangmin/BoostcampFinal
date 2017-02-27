@@ -27,7 +27,6 @@ import java.util.List;
 
 public class GetAlbum extends Activity {
 
-        /** The images. */
     private ArrayList<String> images;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,8 +43,6 @@ public class GetAlbum extends Activity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 if (null != images && !images.isEmpty())
                     Toast.makeText(getApplicationContext(),"position " + position + " " + images.get(position),Toast.LENGTH_SHORT).show();
-                ;
-
             }
         });
 

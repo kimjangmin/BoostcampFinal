@@ -17,6 +17,9 @@ import static android.R.attr.duration;
 public class FullImageActivity extends AppCompatActivity {
 
     private KenBurnsView iv_FullImageActivity;
+
+    //mypage에서 앨범에 있는 자신의 사진을 볼수있는 용도입니다.
+    //켄번이미지 효과를 적용했습니다.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

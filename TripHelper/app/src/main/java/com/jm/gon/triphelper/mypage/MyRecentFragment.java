@@ -4,27 +4,19 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jm.gon.triphelper.FullImageActivity;
 import com.jm.gon.triphelper.R;
 import com.jm.gon.triphelper.db.DbHelper;
 import com.jm.gon.triphelper.db.DbTable;
-import com.jm.gon.triphelper.functionplan2.TimeLineModel;
-import com.jm.gon.triphelper.functionplan3.Fragment1Adapter;
-import com.jm.gon.triphelper.functionplan3.FunctionPlan3Fragment1;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import quatja.com.vorolay.VoronoiView;

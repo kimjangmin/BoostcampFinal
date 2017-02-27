@@ -61,13 +61,14 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
 
     int year, month, day;
 
+    //걷는 아이콘을 누르면 나오는 계획을 세우는 화면입니다.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_function_plan1_1);
+        setContentView(R.layout.activity_function_plan1);
 
         tv_FunctionPlan1_DateStart = (TextView)findViewById(R.id.tv_FunctionPlan1_DateStart);
         tv_FunctionPlan1_DateEnd = (TextView)findViewById(R.id.tv_FunctionPlan1_DateEnd);
@@ -113,6 +114,7 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
         actv_FunctionPlan1_spot.setTextColor(getResources().getColor(R.color.fontColor));
         filter();
     }
+    //도시나 테마의 선택여부에 따라 자동완성 텍스트의 리스트뷰가 다르게 나옵니다.
     private void filter(){
         Cursor cursor;
         if(iscitySelected==false && isthemeSelected == false){
@@ -169,6 +171,8 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
         return super.onOptionsItemSelected(item);
     }
 
+    //다음화면으로 넘어가기전 최소한 필요한 정보가 입력되었는지 확인합니다.
+    //최소한의 필요한 정보는 선택한 도시. 출발날짜와 도착날짜입니다.
     private void gettingInfo(){
         Intent intent = new Intent(FunctionPlan1.this, FunctionPlan2.class);
         if((tv_FunctionPlan1_DateStart.getText().toString()).equals("Depature date")){

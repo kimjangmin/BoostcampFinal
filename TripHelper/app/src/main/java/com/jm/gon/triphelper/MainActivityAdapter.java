@@ -2,15 +2,12 @@ package com.jm.gon.triphelper;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.jm.gon.triphelper.functionplan2.TimeLineAdapter;
-import com.jm.gon.triphelper.functionplan2.TimeLineModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +17,16 @@ import java.util.List;
  */
 
 public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.MainActivityViewHolder>{
-    List<TimeLineModel> modelList;
+    List<DataModel> modelList;
     Context context;
-    public MainActivityAdapter(List<TimeLineModel> timeLineModels, Context ctx){
-        modelList = timeLineModels;
+    public MainActivityAdapter(List<DataModel> dataModels, Context ctx){
+        modelList = dataModels;
         context = ctx;
 
     }
-    public void update(ArrayList<TimeLineModel> list){
+    public void update(ArrayList<DataModel> list){
         modelList.clear();
-        modelList = (List<TimeLineModel>) list.clone();
+        modelList = (List<DataModel>) list.clone();
         notifyDataSetChanged();
     }
     @Override
@@ -48,7 +45,6 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
 
     @Override
     public int getItemCount() {
-        Log.i("TAG","modelsize = "+modelList.size());
         return modelList.size();
     }
 

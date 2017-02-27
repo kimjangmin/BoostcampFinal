@@ -27,7 +27,6 @@
                 android:id="@+id/tv_MainActivityAdapter_title"
                 android:textSize="30dp"
                 android:textColor="@color/mainPage_fontColor"
-                android:text="hahaha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <LinearLayout

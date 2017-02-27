@@ -64,8 +64,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@color/mainPage_fontColor"
-        android:textSize="20dp"
-        android:text="history"/>
+        android:textSize="20dp"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

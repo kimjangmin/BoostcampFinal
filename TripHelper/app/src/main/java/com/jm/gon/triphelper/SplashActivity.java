@@ -48,15 +48,12 @@ public class SplashActivity extends Activity implements OnProgressBarListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
-        Log.i("TAG","make Oncreate");
         iv_SplashActivity_logo = (ImageView)findViewById(R.id.iv_SplashActivity_logo);
         iv_SplashActivity_logo.setImageResource(R.drawable.logo);
         pb_SplashActivity = (NumberProgressBar)findViewById(R.id.pb_SplashActivity);
         dbHelper = new DbHelper(this);
         sqLiteDatabase = dbHelper.getWritableDatabase();
-        Log.i("TAG","setting finish");
         Cursor cursor = sqLiteDatabase.query(DbTable.AutoCompleteTable.TABLENAME,null,null,null,null,null,null);
-        Log.i("TAG","cursor query finish");
 
         pb_SplashActivity.setOnProgressBarListener(this);
 
@@ -66,7 +63,6 @@ public class SplashActivity extends Activity implements OnProgressBarListener {
             new InitData().execute();
         }
         else{
-            Log.i("TAG","start else");
             timer.schedule(setTimeTask(), 100, 10);
         }
     }
@@ -90,17 +86,16 @@ public class SplashActivity extends Activity implements OnProgressBarListener {
         return task;
     }
 
+    //최초 실행시 tourapi3.0에서 제공하는 데이터에 접근하여 필요한 정보를 받아옵니다.
     private class InitData extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
-            Log.i("TAG","start onpreexecute");
             timer.schedule(setTimeTask(), 100, 500);
             super.onPreExecute();
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            Log.i("TAG","start doinback");
             String tempStr=null;
             sqLiteDatabase.beginTransaction();
             try {
@@ -119,7 +114,6 @@ public class SplashActivity extends Activity implements OnProgressBarListener {
                 String line;
                 while ((line = rd.readLine()) != null) {
                     tempStr = line;
-                    Log.i("TAG","result = "+line);
                 }
 
                 rd.close();
@@ -157,7 +151,6 @@ public class SplashActivity extends Activity implements OnProgressBarListener {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
-                Log.i("TAG","JSONException = "+e.getMessage());
                 e.printStackTrace();
             }finally {
                 sqLiteDatabase.endTransaction();

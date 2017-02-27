@@ -30,6 +30,9 @@ public class FunctionSearch extends AppCompatActivity implements TextWatcher {
 
     private AutoCompleteTextView actv_FunctionSearch;
     private ImageButton ib_FunctionSearch_search;
+
+    //나왔던 곳을 재검색하거나 소문으로만 들었던곳들을 검색해볼수 있는 기능을 제공합니다.
+    //각각 누르고 들어온 아이콘에따라 숙소, 볼거리, 먹거리 검색을 다르게 제공합니다.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +64,6 @@ public class FunctionSearch extends AppCompatActivity implements TextWatcher {
         sqLiteDatabase = helper.getReadableDatabase();
         Intent intent = getIntent();
         String type = intent.getStringExtra("type");
-        Log.i("GAG","searching type = "+type);
 
         if(type.equals("32")){
             ib_FunctionSearch_search.setImageDrawable(getResources().getDrawable(R.drawable.hotel));
@@ -92,10 +94,8 @@ public class FunctionSearch extends AppCompatActivity implements TextWatcher {
                     null,
                     null);
         }
-        Log.i("TAG","cursor = "+cursor.getCount());
         arrayList.clear();
         while(cursor.moveToNext()){
-            Log.i("TAG","cursor = "+cursor.getPosition());
             arrayList.add(cursor.getString(cursor.getColumnIndex(DbTable.AutoCompleteTable.TITLE)));
         }
         actv_FunctionSearch.setAdapter(new ArrayAdapter<>(

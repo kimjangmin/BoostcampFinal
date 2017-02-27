@@ -11,12 +11,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.jm.gon.triphelper.functionplan2.TimeLineModel;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +24,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -43,6 +39,7 @@ public class DetailActivity extends AppCompatActivity {
     private ViewPager vp_DetailActivity;
     DetailActivityAdapter activityAdapter;
 
+    //상세화면을 보여주는 엑티비티입니다. 검색한 결과나 플랜3에서 선택한 정보들을 조금더 자세히 보여주는 클래스입니다.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +69,8 @@ public class DetailActivity extends AppCompatActivity {
 
         new FirstAsynctask().execute();
     }
+    //첫번째로는 선택된 곳의 이름을 가져옵니다. 그 이름을 이용하여 contentid 라는 게시물의 정보를 가져옵니다.
+    //가져온후 두번째 ansytask를 시작하고 해당 게시물의 정보와 사진을 가져옵니다.
     public class FirstAsynctask extends AsyncTask<Void, Void, String>{
         String firstresult;
         @Override
