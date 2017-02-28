@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.DIAL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -18,6 +20,9 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_map_id"/>
         <provider
             android:authorities="com.facebook.app.FacebookContentProvider1890864161147195"
             android:name="com.facebook.FacebookContentProvider"
@@ -62,9 +67,8 @@
             android:name=".FunctionSearch"
             android:screenOrientation="portrait" />
         <activity android:name=".DetailActivity" />
-        <activity android:name=".GetAlbum" />
         <activity android:name=".mypage.MyActivity" />
-        <activity android:name=".FullImageActivity"></activity>
+        <activity android:name=".FullImageActivity"/>
     </application>
 
 </manifest>

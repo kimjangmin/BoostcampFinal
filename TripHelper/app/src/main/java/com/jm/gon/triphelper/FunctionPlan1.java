@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,7 +22,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,14 +37,15 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
+public class FunctionPlan1 extends AppCompatActivity implements TextWatcher {
 
     private AutoCompleteTextView actv_FunctionPlan1_spot;
+    private ArrayList<String> spotlist;
     private List<String> listarr;
     private SQLiteDatabase sqLiteDatabase;
     private DbHelper dbHelper;
-    private ListView listView;
-    private ArrayAdapter<String> adapter;
+    private RecyclerView rv_FunctionPlan1_spot;
+    private FunctionPlan1Adapter adapter;
     private ImageButton iv_FunctionPlan1_add;
     private ImageButton ib_FunctionPlan1_Departure;
     private ImageButton ib_FunctionPlan1_Arrival;
@@ -57,7 +60,6 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
     private String selectedtheme;
     private String selectedcity;
     private boolean isthemeSelected;
-    private boolean iscitySelected;
 
     int year, month, day;
 
@@ -78,6 +80,7 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
         sp_FunctionPlan1_theme = (Spinner)findViewById(R.id.sp_FunctionPlan1_theme);
         sp_FunctionPlan1_city = (Spinner)findViewById(R.id.sp_FunctionPlan1_city);
         t_FunctionPlan1_toolbar = (Toolbar)findViewById(R.id.t_FunctionPlan1_toolbar);
+        rv_FunctionPlan1_spot = (RecyclerView) findViewById(R.id.rv_FunctionPlan1_spot);
 
         tv_FunctionPlan1_DateStart.setOnClickListener(dateStartClickListener);
         ib_FunctionPlan1_Departure.setOnClickListener(dateStartClickListener);
@@ -102,31 +105,37 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
         dbHelper = new DbHelper(this);
         sqLiteDatabase = dbHelper.getReadableDatabase();
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        listView = (ListView)findViewById(R.id.list_spot);
-        listView.setAdapter(adapter);
+        adapter = new FunctionPlan1Adapter();
 
+
+        rv_FunctionPlan1_spot.setLayoutManager(new LinearLayoutManager(this));
+        rv_FunctionPlan1_spot.setHasFixedSize(true);
+        rv_FunctionPlan1_spot.setAdapter(adapter);
+        spotlist = new ArrayList<>();
+        rv_itemTouchHelper.attachToRecyclerView(rv_FunctionPlan1_spot);
         listarr = new ArrayList<>();
-
 
         actv_FunctionPlan1_spot = (AutoCompleteTextView) findViewById(R.id.actv_FunctionPlan1_spot);
         actv_FunctionPlan1_spot.addTextChangedListener(this);
         actv_FunctionPlan1_spot.setTextColor(getResources().getColor(R.color.fontColor));
         filter();
     }
+    ItemTouchHelper rv_itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            spotlist.remove((int)(viewHolder.itemView.getTag()));
+            adapter.update(spotlist);
+        }
+    });
     //도시나 테마의 선택여부에 따라 자동완성 텍스트의 리스트뷰가 다르게 나옵니다.
     private void filter(){
         Cursor cursor;
-        if(iscitySelected==false && isthemeSelected == false){
-            Log.i("TAG","all of things is false");
-            cursor = sqLiteDatabase.query(DbTable.AutoCompleteTable.TABLENAME,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null);
-        }else if(iscitySelected == true && isthemeSelected == true){
+        if(isthemeSelected ){
             Log.i("TAG","all of things is true");
             cursor =sqLiteDatabase.query(DbTable.AutoCompleteTable.TABLENAME,
                     null,
@@ -139,8 +148,8 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
             Log.i("TAG","one of things is true");
             cursor =sqLiteDatabase.query(DbTable.AutoCompleteTable.TABLENAME,
                     null,
-                    DbTable.AutoCompleteTable.CONTENTTYPEID+" = ? or "+ DbTable.AutoCompleteTable.AREACODE+" = ?",
-                    new String[]{selectedtheme, selectedcity},
+                    DbTable.AutoCompleteTable.AREACODE+" = ?",
+                    new String[]{selectedcity},
                     null,
                     null,
                     null);
@@ -175,21 +184,17 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
     //최소한의 필요한 정보는 선택한 도시. 출발날짜와 도착날짜입니다.
     private void gettingInfo(){
         Intent intent = new Intent(FunctionPlan1.this, FunctionPlan2.class);
-        if((tv_FunctionPlan1_DateStart.getText().toString()).equals("Depature date")){
+        if((tv_FunctionPlan1_DateStart.getText().toString()).equals(getResources().getString(R.string.departure_date))){
             new DatePickerDialog(FunctionPlan1.this, dateStartSetListener, year, month, day).show();
             Toast.makeText(FunctionPlan1.this, "input departure date",Toast.LENGTH_SHORT).show();
             return;
         }
-        if((tv_FunctionPlan1_DateEnd.getText().toString()).equals("Arrival date")){
+        if((tv_FunctionPlan1_DateEnd.getText().toString()).equals(getResources().getString(R.string.arrival_date))){
             new DatePickerDialog(FunctionPlan1.this, dateEndSetListener, year, month, day).show();
             Toast.makeText(FunctionPlan1.this, "input Arrival date",Toast.LENGTH_SHORT).show();
             return;
         }
         int date = diffDate();
-        ArrayList<String> spotlist =new ArrayList<>();
-        for(int i=0;i<adapter.getCount(); i++){
-            spotlist.add(adapter.getItem(i));
-        }
         intent.putExtra("date",date);
         intent.putExtra("theme",selectedtheme);
         intent.putExtra("city", selectedcity);
@@ -218,7 +223,8 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
     private View.OnClickListener autoCompleteClickListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            adapter.add(actv_FunctionPlan1_spot.getText().toString());
+            spotlist.add(actv_FunctionPlan1_spot.getText().toString());
+            adapter.update(spotlist);
             actv_FunctionPlan1_spot.setText("");
         }
     };
@@ -252,12 +258,15 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
     private AdapterView.OnItemSelectedListener themeSetListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            selectedtheme = theme[position];
-            isthemeSelected = true;
+            if(position != 0) {
+                selectedtheme = theme[position];
+                isthemeSelected = true;
+            }
             filter();
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
+            isthemeSelected = false;
             selectedtheme = theme[0];
         }
     };
@@ -266,12 +275,6 @@ public class FunctionPlan1 extends AppCompatActivity implements TextWatcher{
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             selectedcity = city[position];
-            if(selectedcity.equals(city[0])){
-                iscitySelected = false;
-            }
-            else{
-                iscitySelected = true;
-            }
             filter();
         }
         @Override

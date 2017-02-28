@@ -126,21 +126,23 @@
                 android:layout_height="wrap_content"
                 android:dropDownHeight="175dp"
                 android:textColor="@color/fontColor"
+                android:paddingLeft="10dp"
                 android:completionThreshold="1" />
             <ImageButton
                 android:id="@+id/iv_FunctionPlan1_add"
                 android:background="@android:color/transparent"
                 android:src="@drawable/plus"
                 android:layout_marginLeft="5dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
+                android:layout_gravity="center"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
         </LinearLayout>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/list_spot"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_FunctionPlan1_spot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

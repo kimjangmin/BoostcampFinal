@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class FunctionPlan3Fragment1 extends Fragment implements CustomClickListe
         rv_fragment1 = (RecyclerView) view.findViewById(R.id.rv_fragment1);
 
         bd_dataModel = getArguments().getParcelable("model");
+        Log.i("GAG","hmm... "+ bd_dataModel.getMapx()+"  hmm..."+bd_dataModel.getMapy());
         control = new HttpConnectControl();
         fragment1Adapter = new Fragment1Adapter(getContext(), this);
         control.startAsync(fragment1Adapter, control.LOCATIONBASE, new String[]{bd_dataModel.getMapx(), bd_dataModel.getMapy()});

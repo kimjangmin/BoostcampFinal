@@ -29,7 +29,6 @@ public class FunctionPlan2Adapter extends RecyclerView.Adapter<FunctionPlan2Adap
 
     private List<DataModel> dataModelList;
     private CustomClickListener customClickListener;
-    private int clickposition;
     private Context context;
 
     public interface ListClickHandler{
@@ -56,7 +55,6 @@ public class FunctionPlan2Adapter extends RecyclerView.Adapter<FunctionPlan2Adap
 
     @Override
     public void onBindViewHolder(final TimeLineViewHolder holder, int position) {
-        clickposition = position;
         holder.title.setText(dataModelList.get(position).getTitle());
         holder.addr.setText(dataModelList.get(position).getAddr());
         Glide.with(context)
@@ -101,7 +99,7 @@ public class FunctionPlan2Adapter extends RecyclerView.Adapter<FunctionPlan2Adap
         @Override
         public void onClick(View v) {
             if(getAdapterPosition() != RecyclerView.NO_POSITION){
-                customClickListener.onClick(dataModelList.get(clickposition));
+                customClickListener.onClick(dataModelList.get(getAdapterPosition()));
             }
 
         }

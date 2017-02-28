@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.jm.gon.triphelper.CustomClickListener;
@@ -23,7 +24,6 @@ public class FunctionPlan2 extends AppCompatActivity implements CustomClickListe
     private int userInputSpotCount;
 
     private RecyclerView rv_FunctionPlan2_timeline;
-    private List<DataModel> resultList;
     private ArrayList<String> userInputSpotList;
 
     private int date;
@@ -46,7 +46,6 @@ public class FunctionPlan2 extends AppCompatActivity implements CustomClickListe
         userInputSpotCount = userInputSpotList.size();
         dfs_visit = new boolean[userInputSpotCount];
         Arrays.fill(dfs_visit, Boolean.FALSE);
-        resultList = new ArrayList<>();
 
         rv_FunctionPlan2_timeline = (RecyclerView) findViewById(R.id.rv_FunctionPlan2_timeline);
         rv_FunctionPlan2_timeline.setLayoutManager(new LinearLayoutManager(this));

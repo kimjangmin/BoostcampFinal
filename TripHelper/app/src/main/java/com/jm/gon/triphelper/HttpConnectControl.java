@@ -174,8 +174,6 @@ public class HttpConnectControl {
     //실제로 파싱을 하여 model의 setter로 추가하는 메소드입니다.
     public DataModel doJson(JSONObject jsonStr) {
         DataModel dataModel = new DataModel();
-
-
         try {
             dataModel.setTitle(jsonStr.getString("title"));
             if (jsonStr.has("addr1")) {
@@ -267,7 +265,6 @@ public class HttpConnectControl {
         //
         @Override
         protected Boolean doInBackground(String... spot) {
-            String strr;
             try {
                 for (int i = 0; i < userInputSpotCount; i++) {
                     String[] keyword = new String[]{userInputSpotList.get(i)};
@@ -327,9 +324,22 @@ public class HttpConnectControl {
             dfs(0, 0);
 
             //입력한 거점 갯수가 날짜보다 작을때!
-            if (userInputSpotCount <= date) {
+            if(userInputSpotCount == 0){
+                try {
+                    String[] arr = new String[]{city};
+                    //입력한 도시기반으로 검색.
+                    String result = new NetworkApi().execute(makeUrl(AREABASE, arr)).get();
+                    parsingJson(commonParsing(result), date*3);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if (userInputSpotCount <= date) {
                 for (int cnt = 0; cnt < date; cnt++) {
                     //내 입력 목록갯수 * 3만큼 구하고 좌표기반으로 탐색..
+                    Log.i(TAG,"here");
                     if (cnt < userInputSpotCount) {
                         try {
                             //keywordmodellist => 원래의 관광지 모델.
@@ -351,7 +361,7 @@ public class HttpConnectControl {
                             String[] arr = new String[]{city};
                             //입력한 도시기반으로 검색.
                             String result = new NetworkApi().execute(makeUrl(AREABASE, arr)).get();
-                            parsingJson(commonParsing(result), date - cnt);
+                            parsingJson(commonParsing(result), (date - cnt)*3);
                             break;
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -360,8 +370,32 @@ public class HttpConnectControl {
                         }
                     }
                 }
+            }else {
+                Log.i(TAG,"there");
+                int overdate = date*3;
+                int quo = overdate/userInputSpotCount;
+                int remainder = overdate%userInputSpotCount;
+                String[] arr;
+                String result = null;
+                for (int cnt = 0; cnt < userInputSpotCount; cnt++) {
+                    modelList.add(keywordmodelList.get(dfs_shortestNode.get(cnt)));
+                    arr = new String[]{locationXY[dfs_shortestNode.get(cnt)][0], locationXY[dfs_shortestNode.get(cnt)][1]};
+                    try {
+//                        new CommonAsync(adapter).execute(makeUrl(LOCATIONBASE,arr));
+                        result = new NetworkApi().execute(makeUrl(LOCATIONBASE, arr)).get();
+                        Log.i(TAG,"result = "+result);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                    if(cnt < remainder){
+                        parsingJson(commonParsing(result), quo);
+                    } else{
+                        parsingJson(commonParsing(result), quo-1);
+                    }
+                }
             }
-
             adapter.update(modelList);
         }
 
@@ -374,8 +408,6 @@ public class HttpConnectControl {
                     result = httpConnect(url);
 
                 } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
                     e.printStackTrace();
                 }
                 return result;
